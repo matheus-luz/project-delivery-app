@@ -5,7 +5,11 @@ function Login() {
     <div>
       <h1>Login</h1>
       <a href="/register">
-        <input type="button" value="Botão de cadastro" />
+        <input
+          data-testid="common_login__button-register"
+          type="button"
+          value="Ainda não tenho conta"
+        />
       </a>
     </div>
   );
