@@ -1,16 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import validateEmail from '../../utils/emailValidator';
 
 function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [canLogin, setCanLogin] = useState(false);
+  const passwordLenght = 6;
+
+  useEffect(() => {
+    if (validateEmail(username) && password.length >= passwordLenght) {
+      setCanLogin(true);
+    }
+  }, [username, password]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <h1>Login</h1>
-      <a href="/register">
-        <input
-          data-testid="common_login__button-register"
-          type="button"
-          value="Ainda não tenho conta"
-        />
-      </a>
+      <div>
+        <div>Imagem</div>
+        <h1>Nome do aplicativo</h1>
+        <form>
+          <label htmlFor="user-login">
+            Login
+            <input
+              id="user-login"
+              data-testid="common_login__input-email"
+              value={ username }
+              onChange={ (e) => setUsername(e.target.value) }
+              type="text"
+              placeholder="email@trybeer.com"
+            />
+          </label>
+          <label htmlFor="user-password">
+            Senha
+            <input
+              id="user-password"
+              data-testid="common_login__input-password"
+              value={ password }
+              onChange={ (e) => setPassword(e.target.value) }
+              type="password"
+              placeholder="********"
+            />
+          </label>
+          <button
+            type="submit"
+            data-testid="common_login__button-login"
+            disabled={ !canLogin }
+            onClick={ handleSubmit }
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            data-testid="common_login__button-register"
+          >
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
