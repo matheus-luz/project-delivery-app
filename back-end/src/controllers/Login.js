@@ -1,5 +1,5 @@
+const rescue = require('express-rescue');
 const LoginService = require('../services/Login');
-const rescue = require('express-rescue')
 
 module.exports = rescue(async (req, res) => {
   const { body } = req;
