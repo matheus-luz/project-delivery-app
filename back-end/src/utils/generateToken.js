@@ -1,5 +1,7 @@
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+
+const JWT_SECRET = fs.readFileSync('./jwt.evaluation.key', { encoding: 'utf8' });
 
 module.exports = (userId, email) => {
   const jwtConfig = {
@@ -7,7 +9,7 @@ module.exports = (userId, email) => {
     algorithm: 'HS256',
   };
   
-  const token = jwt.sign({ data: { userId, email } }, process.env.JWT_SECRET, jwtConfig);
+  const token = jwt.sign({ data: { userId, email } }, JWT_SECRET, jwtConfig);
 
   return token;
 };
