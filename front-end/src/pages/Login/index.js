@@ -3,19 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import validateEmail from '../../utils/emailValidator';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [canLogin, setCanLogin] = useState(false);
   const passwordLenght = 6;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (validateEmail(username) && password.length >= passwordLenght) {
+    if (validateEmail(email) && password.length >= passwordLenght) {
       setCanLogin(true);
     }
-  }, [username, password]);
+  }, [email, password]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   };
 
@@ -28,14 +28,14 @@ function Login() {
       <div>
         <div>Imagem</div>
         <h1>Nome do aplicativo</h1>
-        <form>
+        <form onSubmit={ handleSubmit }>
           <label htmlFor="user-login">
             Login
             <input
               id="user-login"
               data-testid="common_login__input-email"
-              value={ username }
-              onChange={ (e) => setUsername(e.target.value) }
+              value={ email }
+              onChange={ (e) => setEmail(e.target.value) }
               type="text"
               placeholder="email@trybeer.com"
             />
@@ -55,7 +55,6 @@ function Login() {
             type="submit"
             data-testid="common_login__button-login"
             disabled={ !canLogin }
-            onClick={ handleSubmit }
           >
             Login
           </button>
