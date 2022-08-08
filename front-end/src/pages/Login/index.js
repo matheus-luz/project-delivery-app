@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import validateEmail from '../../utils/emailValidator';
 
 function Login() {
@@ -6,6 +7,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [canLogin, setCanLogin] = useState(false);
   const passwordLenght = 6;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (validateEmail(username) && password.length >= passwordLenght) {
@@ -15,6 +17,10 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const redirectToRegister = () => {
+    navigate('/register');
   };
 
   return (
@@ -56,6 +62,7 @@ function Login() {
           <button
             type="button"
             data-testid="common_login__button-register"
+            onClick={ redirectToRegister }
           >
             Register
           </button>
