@@ -8,7 +8,6 @@ module.exports = async (req, res) => {
   const token = generateToken(user.id, user.role);
 
   return res.status(200).json({
-    id: user.id,
     name: user.name,
     email: user.email,
     role: user.role,
