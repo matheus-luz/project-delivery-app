@@ -1,10 +1,10 @@
 import React from 'react';
-import CardProducts from '../../components/CardProducts';
+import CardList from '../../components/CardList';
 
 function Products() {
   return (
     <div>
-      <CardProducts />
+      <CardList />
     </div>
   );
 }
