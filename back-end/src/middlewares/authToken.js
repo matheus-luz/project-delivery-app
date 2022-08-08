@@ -16,6 +16,6 @@ module.exports = async (req, _res, next) => {
 
     return next();
   } catch (err) {
-    throw new CustomError(401, 'Expired or invalid token');
+    next(new CustomError(401, 'Expired or invalid token'));
   }
 };
