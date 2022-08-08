@@ -9,7 +9,7 @@ const { expect } = chai;
 
 const app = require('../api/app');
 
-describe('Route POST /login', () => {
+describe('Route POST /register', () => {
   const userMock = {
     name: "Rafael da Cunha Santos",
     email: "customer@deliveryapp.com",
