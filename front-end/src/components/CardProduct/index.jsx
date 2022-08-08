@@ -21,7 +21,7 @@ function CardProduct({ product }) {
       <p data-testid={ `customer_products__element-card-price-${product.id}` }>
         { product.price }
       </p>
-      <Counter />
+      <Counter product={ product } />
     </div>
   );
 }
