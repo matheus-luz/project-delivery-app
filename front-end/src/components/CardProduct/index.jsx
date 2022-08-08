@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 function CardProduct({ product }) {
   return (
-    <div key={ product.id }>
+    <div data-testid={ `customer_products__element-card-price-${id}` } key={ product.id }>
 
       <p>
         {product.name}
