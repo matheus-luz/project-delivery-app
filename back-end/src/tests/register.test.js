@@ -27,7 +27,10 @@ describe('Route POST /register', () => {
     stub(User, 'create').resolves(userMock);
   });
 
-  after(() => User.findOne.restore());
+  after(() => {
+    User.findOne.restore();
+    User.create.restore();
+  });
 
   describe('if the name passed have less than 12 characters long', () => {
     let response;

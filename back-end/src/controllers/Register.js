@@ -3,7 +3,7 @@ const generateToken = require('../utils/generateToken');
 
 module.exports = async (req, res) => {
   const { body } = req;
-  const user = await RegisterService(body);
+  const user = await RegisterService.register(body);
 
   const token = generateToken(user.id, user.role);
 
