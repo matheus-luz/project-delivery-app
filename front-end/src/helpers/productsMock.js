@@ -11,7 +11,7 @@ export default [{
   urlImage: 'http://localhost:3001/images/heineken_600ml.jpg',
 },
 {
-  id: 1,
+  id: 3,
   name: 'Antarctica Pilsen 300ml',
   price: 2.49,
   urlImage: 'http://localhost:3001/images/antarctica_pilsen_300ml.jpg',

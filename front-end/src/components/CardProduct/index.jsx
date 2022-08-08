@@ -1,17 +1,27 @@
 import PropTypes from 'prop-types';
+import Counter from '../Counter';
 
 function CardProduct({ product }) {
   return (
-    <div data-testid={ `customer_products__element-card-price-${id}` } key={ product.id }>
+    <div
+      data-testid={ `customer_products__element-card-price-${product.id}` }
+      key={ product.id }
+    >
 
-      <p>
+      <p data-testid={ `customer_products__element-card-title-${product.id}` }>
         {product.name}
       </p>
 
-      <img src={ product.urlImage } alt={ product.name } />
+      <img
+        data-testid={ `customer_products__img-card-bg-image-${product.id}` }
+        src={ product.urlImage }
+        alt={ product.name }
+      />
 
-      <p>{ product.price }</p>
-
+      <p data-testid={ `customer_products__element-card-price-${product.id}` }>
+        { product.price }
+      </p>
+      <Counter />
     </div>
   );
 }

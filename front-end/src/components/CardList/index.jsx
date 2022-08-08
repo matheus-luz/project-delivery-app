@@ -12,6 +12,7 @@ function CardProducts() {
       {
         data.map((product) => <CardProduct key={ product.id } product={ product } />)
       }
+      <button type="button">Ver Carrinho</button>
     </>
   );
 }
