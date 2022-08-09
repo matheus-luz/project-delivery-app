@@ -12,11 +12,10 @@ function FormRegister() {
 
   const onButton = (name.length >= MIN_NAME
     && emailRegex.test(email) && (password.length >= MIN_PASSWORD));
-  console.log(name);
+
   return (
     <section>
       <form>
-
         <br />
         <p> Name </p>
         <input
