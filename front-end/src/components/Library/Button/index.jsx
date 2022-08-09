@@ -9,6 +9,7 @@ function Button({ type, onClick, children, testid, color, disabled }) {
       bg-trybe-primary 
       text-white 
       hover:bg-trybe-primary-dark 
+      disabled:bg-slate-400
       uppercase`;
     case 'secondary':
       return `tracking-wide 

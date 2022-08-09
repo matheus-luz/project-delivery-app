@@ -17,7 +17,10 @@ const register = async (body) => {
   await validateEmail(email);
   await validateName(name);
 
-  const user = await User.create({ ...body, password: md5(password) });
+  const user = await User.create({
+    ...body,
+    password: md5(password),
+  });
 
   return user;
 };
