@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const rescue = require('express-rescue');
 const CustomerController = require('../controllers/Customer');
-const validateToken = require('../middlewares/validateToken');
+const authToken = require('../middlewares/authToken');
 
-router.get('/products', validateToken, rescue(CustomerController.readProducts));
+router.get('/products', authToken, rescue(CustomerController.readProducts));
 
 module.exports = router;
