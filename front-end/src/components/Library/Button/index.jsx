@@ -20,7 +20,7 @@ function Button({ type, onClick, children, testid, color, disabled }) {
       return `ring-trybe-primary
       ring-2 
       ring-inset 
-      bg-white 
+      bg-transparent 
       text-trybe-primary 
       hover:bg-gray-100 
       uppercase`;

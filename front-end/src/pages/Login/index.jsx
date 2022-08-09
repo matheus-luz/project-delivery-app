@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Library/Button';
+import TextInput from '../../components/Library/TextInput';
 import validateEmail from '../../utils/emailValidator';
 
 function Login() {
@@ -25,33 +26,38 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="flex items-center justify-center h-screen w-screen">
       <div>
         <div>Imagem</div>
-        <h1>Nome do aplicativo</h1>
-        <form onSubmit={ handleSubmit }>
-          <label htmlFor="user-login">
-            Login
-            <input
-              id="user-login"
-              data-testid="common_login__input-email"
-              value={ email }
-              onChange={ (e) => setEmail(e.target.value) }
-              type="text"
-              placeholder="email@trybeer.com"
-            />
-          </label>
-          <label htmlFor="user-password">
-            Senha
-            <input
-              id="user-password"
-              data-testid="common_login__input-password"
-              value={ password }
-              onChange={ (e) => setPassword(e.target.value) }
-              type="password"
-              placeholder="********"
-            />
-          </label>
+        <h1 className="text-3xl text-center my-3">APP</h1>
+        <form
+          onSubmit={ handleSubmit }
+          className={ `bg-slate-100 border-2 
+          border-slate-300 
+          p-4 
+          shadow-md
+          flex
+          flex-col
+          gap-3` }
+        >
+          <TextInput
+            id="user-login"
+            data-testid="common_login__input-email"
+            value={ email }
+            onChange={ (e) => setEmail(e.target.value) }
+            type="text"
+            label="Login"
+            placeholder="email@trybeer.com"
+          />
+          <TextInput
+            id="user-password"
+            data-testid="common_login__input-password"
+            value={ password }
+            onChange={ (e) => setPassword(e.target.value) }
+            type="password"
+            label="Senha"
+            placeholder="********"
+          />
           <Button
             type="submit"
             testid="common_login__button-login"
@@ -65,7 +71,7 @@ function Login() {
             testid="common_login__button-register"
             onClick={ redirectToRegister }
           >
-            Register
+            Registrar
           </Button>
         </form>
       </div>
