@@ -8,6 +8,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [canLogin, setCanLogin] = useState(false);
+  const [invalidLogin, setInvalidLogin] = useState(false);
   const passwordLenght = 6;
   const navigate = useNavigate();
 
@@ -19,6 +20,26 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const response = await fetch('api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    if (!response.ok) {
+      setInvalidLogin(true);
+    } else {
+      setInvalidLogin(false);
+      const data = await response.json();
+      localStorage.setItem('user', JSON.stringify(data));
+      if (data.role === 'customer') {
+        navigate('/customer/products');
+      }
+    }
   };
 
   const redirectToRegister = () => {
@@ -74,6 +95,14 @@ function Login() {
             Registrar
           </Button>
         </form>
+        { invalidLogin && (
+          <div
+            className="text-red-500 text-center"
+            data-testid="common_login__element-invalid-email"
+          >
+            Usuário ou senha inválidos
+          </div>
+        ) }
       </div>
     </div>
   );
