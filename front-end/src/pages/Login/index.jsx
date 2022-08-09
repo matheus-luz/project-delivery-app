@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../components/Library/Button';
 import validateEmail from '../../utils/emailValidator';
 
 function Login() {
@@ -51,20 +52,21 @@ function Login() {
               placeholder="********"
             />
           </label>
-          <button
+          <Button
             type="submit"
-            data-testid="common_login__button-login"
+            testid="common_login__button-login"
             disabled={ !canLogin }
           >
             Login
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            data-testid="common_login__button-register"
+            color="tertiary"
+            testid="common_login__button-register"
             onClick={ redirectToRegister }
           >
             Register
-          </button>
+          </Button>
         </form>
       </div>
     </div>
