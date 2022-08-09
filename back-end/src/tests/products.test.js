@@ -51,7 +51,7 @@ describe('Route GET /customer/products', () => {
   });
 
   it('If token is not found', async () => {
-  const token = '';
+  const token = ''
 
     chaiHttpResponse = await chai
     .request(app)
