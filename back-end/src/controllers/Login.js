@@ -5,9 +5,9 @@ module.exports = async (req, res) => {
   const { body } = req;
   const user = await LoginService(body);
 
-  const token = generateToken(user.id, user.email);
+  const token = generateToken(user.id, user.role);
 
-  return res.status(200).json({ 
+  return res.status(200).json({
     name: user.name,
     email: user.email,
     role: user.role,

@@ -9,7 +9,7 @@ const { expect } = chai;
 
 const app = require('../api/app');
 
-describe('Route POST /login', () => {
+describe('Method POST /register', () => {
   const userMock = {
     name: "Rafael da Cunha Santos",
     email: "customer@deliveryapp.com",
@@ -27,7 +27,10 @@ describe('Route POST /login', () => {
     stub(User, 'create').resolves(userMock);
   });
 
-  after(() => User.findOne.restore());
+  after(() => {
+    User.findOne.restore();
+    User.create.restore();
+  });
 
   describe('if the name passed have less than 12 characters long', () => {
     let response;
