@@ -33,7 +33,12 @@ const readProducts = async () => {
   return products;
 };
 
+const updateSaleStatus = async (id, status) => {
+  await Sale.update({ status }, { where: { id } });
+};
+
 module.exports = {
   readProducts,
   createSale,
+  updateSaleStatus,
 };
