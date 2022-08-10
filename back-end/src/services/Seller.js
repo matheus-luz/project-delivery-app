@@ -1,4 +1,4 @@
-const { User, Sale, SaleProduct } = require('../database/models');
+const { User, Sale, Product } = require('../database/models');
 
 const formatResponse = (orders) => orders.map((order) => ({
   user: order.user,
@@ -30,16 +30,13 @@ const getInfo = async () => {
 };
 
 const getById = async (id) => {
-  const find = await SaleProduct.findAll(
-    { 
-    include: 
-    [
-      { model: SaleProduct, as: 'sale' },
-      { model: SaleProduct, as: 'product' },
+  const find = await Sale.findByPk(id, {
+    include: [{ model: User, as: 'seller', attributes: ['name'] },
+    { model: Product, as: 'products', through: { attributes: ['quantity'], as: 'salesProducts' } },
     ],
-    },
-    { where: { id } },
-);
+    attributes: { 
+      exclude: ['userId', 'sellerId', 'totalPrice', 'deliveryAddress', 'deliveryNumber'] },
+  });
 
   return { status: 200, data: find };
 };

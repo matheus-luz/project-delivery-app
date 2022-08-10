@@ -35,7 +35,7 @@ const readProducts = async () => {
 
 const readOne = async (id) => {
   const order = await Sale.findByPk(id, {
-    include: [{ model: User, as: 'userSeller', attributes: ['name'] },
+    include: [{ model: User, as: 'seller', attributes: ['name'] },
     { model: Product,
       as: 'products',
       through: { attributes: ['quantity'], as: 'salesProducts' } }],
