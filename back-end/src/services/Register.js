@@ -1,4 +1,3 @@
-const md5 = require('md5');
 const { User } = require('../database/models');
 const CustomError = require('../utils/customError');
 
@@ -13,14 +12,11 @@ const validateName = async (name) => {
 };
 
 const register = async (body) => {
-  const { name, email, password } = body;
+  const { name, email } = body;
   await validateEmail(email);
   await validateName(name);
 
-  const user = await User.create({
-    ...body,
-    password: md5(password),
-  });
+  const user = await User.create({ ...body });
 
   return user;
 };

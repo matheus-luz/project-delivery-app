@@ -1,4 +1,3 @@
-const md5 = require('md5');
 const { Op } = require('sequelize');
 const { User } = require('../database/models');
 const { validateEmail, validateName } = require('./Register');
@@ -9,11 +8,11 @@ const getAll = async () => {
 };
 
 const create = async (body) => {
-  const { name, email, password } = body;
+  const { name, email } = body;
   await validateEmail(email);
   await validateName(name);
 
-  const user = await User.create({ ...body, password: md5(password) });
+  const user = await User.create({ ...body });
 
   return user;
 };

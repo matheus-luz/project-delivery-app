@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, Sale, SaleProduct } = require('../database/models');
+const { Product, Sale, SaleProduct, User } = require('../database/models');
 const CustomError = require('../utils/customError');
 const config = require('../database/config/config');
 
@@ -33,6 +33,19 @@ const readProducts = async () => {
   return products;
 };
 
+const readOne = async (id) => {
+  const order = await Sale.findByPk(id, {
+    include: [{ model: User, as: 'userSeller', attributes: ['name'] },
+    { model: Product,
+      as: 'products',
+      through: { attributes: ['quantity'], as: 'salesProducts' } }],
+  });
+
+  if (!order) throw new CustomError(404, 'Order doesn\'t exists');
+
+  return order;
+};
+
 const updateSaleStatus = async (id, status) => {
   await Sale.update({ status }, { where: { id } });
 };
@@ -41,4 +54,5 @@ module.exports = {
   readProducts,
   createSale,
   updateSaleStatus,
+  readOne,
 };

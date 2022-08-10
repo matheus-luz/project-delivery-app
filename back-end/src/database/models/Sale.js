@@ -6,7 +6,16 @@ module.exports = (sequelize, DataTypes) => {
     totalPrice: DataTypes.DECIMAL,
     deliveryAddress: DataTypes.STRING,
     deliveryNumber: DataTypes.STRING,
-    saleDate: DataTypes.DATE,
+    saleDate: {
+      type: DataTypes.DATE,
+      get() {
+        return this.getDataValue('saleDate').toLocaleString('pt-BR', {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit"
+        })
+      }
+    },
     status: {
       type: DataTypes.STRING,
       defaultValue: 'Pentende'
@@ -29,11 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'seller',
       foreignKey: 'sellerId',
     });
-
-    // Sale.associate = (models) => {
-    //   Sale.hasMany(models.SaleProduct, { foreignKey: 'saleId', as: 'Sale' });
-    // }
-
   };
 
 
