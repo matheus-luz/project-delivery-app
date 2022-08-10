@@ -1,9 +1,9 @@
-const { User, Sale } = require('../database/models');
+const { User, Sale, SaleProduct } = require('../database/models');
 
 const formatResponse = (orders) => orders.map((order) => ({
   user: order.user,
   seller: order.seller,
-  pedido: {
+  request: {
     address: order.deliveryAddress,
     adressNumber: order.deliveryNumber,
     data: order.saleDate,
@@ -20,7 +20,7 @@ const getInfo = async () => {
         { model: User, as: 'user', attributes: { exclude: ['id', 'password'] } }, 
         { model: User, as: 'seller', attributes: { exclude: ['id', 'password'] } },
       ],
-      attributes: { exclude: ['id', 'userId', 'sellerId'] },
+      attributes: { exclude: ['userId', 'sellerId'] },
     },
 );
 
@@ -29,6 +29,22 @@ const getInfo = async () => {
   return { status: 200, data };
 };
 
+const getById = async (id) => {
+  const find = await SaleProduct.findAll(
+    { 
+    include: 
+    [
+      { model: SaleProduct, as: 'sale' },
+      { model: SaleProduct, as: 'product' },
+    ],
+    },
+    { where: { id } },
+);
+
+  return { status: 200, data: find };
+};
+
 module.exports = {
   getInfo,
+  getById,
 };
