@@ -4,7 +4,8 @@ const CustomerController = require('../controllers/Customer');
 const authToken = require('../middlewares/authToken');
 
 router.get('/products', authToken, rescue(CustomerController.readProducts));
-
+router.post('/checkout', authToken, rescue(CustomerController.createSale));
+router.patch('/statusUpdate/:id', authToken, rescue(CustomerController.updateSaleStatus));
 router.get('/orders/:id', authToken, rescue(CustomerController.readOne));
 
 module.exports = router;
