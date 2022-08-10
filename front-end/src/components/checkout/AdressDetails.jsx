@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../Library/Button';
 import TextInput from '../Library/TextInput';
 
 function AdressDetails() {
+  const navigate = useNavigate();
+
   const [address, setAdress] = useState('');
   const [number, setNumber] = useState('');
 
   const handleClick = () => {
-    navigate('/customer/orders/:id', { replace: true });
+    navigate('/customer/orders/:1', { replace: true });
   }; // id é retornado da requisição da venda; precisa pegalo ainda
   return (
     <div>
