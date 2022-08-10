@@ -1,10 +1,20 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { userContext } from '../../context/userContext';
 
 function Header({ children }) {
+  const { user } = useContext(userContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    navigate('/');
+  };
+
   return (
     <nav className="bg-trybe-primary flex h-12 items-center">
-      <div>
+      <div className="flex gap-3">
         {children}
       </div>
       <h3
@@ -19,7 +29,7 @@ function Header({ children }) {
         h-full 
         text-center` }
       >
-        NOME-DE-USUARIO
+        {user.name}
       </h3>
       <button
         className={ `bg-trybe-blue 
@@ -32,6 +42,7 @@ function Header({ children }) {
         text-center` }
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
+        onClick={ logout }
       >
         Sair
       </button>
