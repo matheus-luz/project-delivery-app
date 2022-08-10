@@ -17,13 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     models.Product.hasMany(SaleProduct, { foreignKey: 'productId', as: 'product' });
 
     models.Sale.belongsToMany(models.Product, {
-      as: 'Sale',
+      as: 'products',
       through: SaleProduct,
       foreignKey: 'saleId',
       otherKey: 'productId'
     });
     models.Product.belongsToMany(models.Sale, {
-      as: 'Product',
+      as: 'sales',
       through: SaleProduct,
       foreignKey: 'productId',
       otherKey: 'saleId'
