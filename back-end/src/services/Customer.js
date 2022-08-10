@@ -36,9 +36,11 @@ const readProducts = async () => {
 
 const readOne = async (id) => {
   const order = await Sale.findByPk(id, {
+    attributes: { exclude: ['userId', 'sellerId', 'deliveryAddress', 'deliveryNumber'] },
     include: [{ model: User, as: 'seller', attributes: ['name'] },
     { model: Product,
       as: 'products',
+      attributes: { exclude: 'urlImage' },
       through: { attributes: ['quantity'], as: 'salesProducts' } }],
   });
 
