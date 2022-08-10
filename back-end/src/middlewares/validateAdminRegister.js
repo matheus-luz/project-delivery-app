@@ -2,10 +2,10 @@ const Joi = require('joi');
 const CustomError = require('../utils/customError');
 
 const schema = Joi.object({
-  name: Joi.string().regex(/^[a-zA-Z_ ]+$/).min(12).required(),
+  name: Joi.string().min(12).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  role: Joi.string().required(),
+  role: Joi.string().valid('administrator', 'seller', 'customer').required(),
 });
 
 module.exports = (req, _res, next) => {
