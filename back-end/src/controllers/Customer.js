@@ -22,9 +22,8 @@ const readOne = async (req, res) => {
 
 const updateSaleStatus = async (req, res) => {
   const { id } = req.params;
-  const { status } = req.body;
 
-  await CustomerService.updateSaleStatus(id, status);
+  await CustomerService.updateSaleStatus(id);
 
   return res.status(200).json({ message: 'Updated' });
 };

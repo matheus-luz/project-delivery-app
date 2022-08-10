@@ -6,12 +6,13 @@ const config = require('../database/config/config');
 const sequelize = new Sequelize(config.development);
 
 const createSale = async (body, user) => {
-  const { sellerId, totalPrice, deliveryAddress, deliveryNumber, productIds, quantity } = body;
+  const { sellerId, totalPrice, deliveryAddress, deliveryNumber, products } = body;
+  const productsIds = products.map(({ productId }) => productId);
   const { userId } = user;
 
-  const { count } = await Product.findAndCountAll({ where: { id: productIds } });
+  const { count } = await Product.findAndCountAll({ where: { id: productsIds } });
 
-  if (productIds.length !== count) {
+  if (products.length !== count) {
     throw new CustomError(404, '"productIds" not found');
   }
 
@@ -20,8 +21,8 @@ const createSale = async (body, user) => {
       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber,
     }, { transaction: t });
 
-    const saleProduct = productIds.map((productId, index) => (
-      { saleId: sale.id, productId, quantity: quantity[index] }
+    const saleProduct = products.map(({ productId, quantity }) => (
+      { saleId: sale.id, productId, quantity }
     ));
 
     await SaleProduct.bulkCreate(saleProduct, { transaction: t });
@@ -46,8 +47,8 @@ const readOne = async (id) => {
   return order;
 };
 
-const updateSaleStatus = async (id, status) => {
-  await Sale.update({ status }, { where: { id } });
+const updateSaleStatus = async (id) => {
+  await Sale.update({ status: 'Entregue' }, { where: { id } });
 };
 
 module.exports = {

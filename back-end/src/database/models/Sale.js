@@ -3,9 +3,13 @@ module.exports = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     userId: DataTypes.INTEGER,
     sellerId: DataTypes.INTEGER,
-    totalPrice: DataTypes.DECIMAL,
+    totalPrice: DataTypes.DECIMAL(10,2),
     deliveryAddress: DataTypes.STRING,
     deliveryNumber: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'Pendente'
+    },
     saleDate: {
       type: DataTypes.DATE,
       get() {
@@ -15,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
           day: "2-digit"
         })
       }
-    },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: 'Pentende'
     },
   },
   {
