@@ -3,10 +3,10 @@ const { User, Sale } = require('../database/models');
 const formatResponse = (orders) => orders.map((order) => ({
   user: order.user,
   seller: order.seller,
-  pedido: {
+  order: {
     address: order.deliveryAddress,
     adressNumber: order.deliveryNumber,
-    data: order.saleDate,
+    saleDate: order.saleDate,
     totalPrice: order.totalPrice,
     status: order.status,
   },

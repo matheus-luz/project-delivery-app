@@ -12,7 +12,7 @@ const generateToken = require('../utils/generateToken');
 
 const token = generateToken(999, 'customer')
 
-describe.only('Method GET /customer/orders/:id', () => {
+describe('Method GET /customer/orders/:id', () => {
   const order = {
     "saleDate": "01/07/2022",
     "id": 1,
