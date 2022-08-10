@@ -11,7 +11,11 @@ function AdressDetails() {
       <form>
         <label htmlFor="responsavel">
           Vendedor Responsavel
-          <select customer_checkout__select-seller id="responsavel" name="estado">
+          <select
+            data-testid="customer_checkout__select-seller"
+            id="responsavel"
+            name="estado"
+          >
             <option value="fulana1">fulana1</option>
             <option value="fulana2">fulana2</option>
             <option value="fulana3">fulana3</option>
