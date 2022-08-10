@@ -4,38 +4,31 @@ import TextInput from '../Library/TextInput';
 
 function AdressDetails() {
   const [address, setAdress] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        address,
-        email,
-        password,
-      }),
-    });
-    if (!response.ok) {
-      setError(true);
-    } else {
-      setError(false);
-      const data = await response.json();
-      localStorage.setItem('user', JSON.stringify(data));
-      if (data.role === 'customer') {
-        navigate('/customer/orders/<id>');
-      }
-    }
-  };
+  const [number, setNumber] = useState('');
   return (
     <div>
       <h3>Detalhes e Endereço para Entrega</h3>
-      <form onSubmit={ handleSubmit }>
+      <form>
+        <label htmlFor="responsavel">
+          Vendedor Responsavel
+          <select customer_checkout__select-seller id="responsavel" name="estado">
+            <option value="fulana1">fulana1</option>
+            <option value="fulana2">fulana2</option>
+            <option value="fulana3">fulana3</option>
+          </select>
+        </label>
+        <TextInput
+          placeholder="Numero"
+          data-testid="customer_checkout__input-addressNumber"
+          type="number"
+          id="user-numero"
+          label="Numero"
+          value={ number }
+          onChange={ (e) => setNumber(e.target.value) }
+        />
         <TextInput
           placeholder="Digite o endereço"
-          data-testid=""
+          data-testid="customer_checkout__input-address"
           type="text"
           id="user-name"
           label="Name"
@@ -44,7 +37,7 @@ function AdressDetails() {
         />
         <Button
           type="submit"
-          testid=""
+          testid="customer_checkout__button-submit-order"
         >
           Finalizar Pedido
         </Button>
