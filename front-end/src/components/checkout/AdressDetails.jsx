@@ -5,47 +5,51 @@ import TextInput from '../Library/TextInput';
 function AdressDetails() {
   const [address, setAdress] = useState('');
   const [number, setNumber] = useState('');
+
+  const handleClick = () => {
+    navigate('/customer/orders/:id', { replace: true });
+  }; // id é retornado da requisição da venda; precisa pegalo ainda
   return (
     <div>
       <h3>Detalhes e Endereço para Entrega</h3>
-      <form>
-        <label htmlFor="responsavel">
-          Vendedor Responsavel
-          <select
-            data-testid="customer_checkout__select-seller"
-            id="responsavel"
-            name="estado"
-          >
-            <option value="fulana1">fulana1</option>
-            <option value="fulana2">fulana2</option>
-            <option value="fulana3">fulana3</option>
-          </select>
-        </label>
-        <TextInput
-          placeholder="Numero"
-          data-testid="customer_checkout__input-addressNumber"
-          type="number"
-          id="user-numero"
-          label="Numero"
-          value={ number }
-          onChange={ (e) => setNumber(e.target.value) }
-        />
-        <TextInput
-          placeholder="Digite o endereço"
-          data-testid="customer_checkout__input-address"
-          type="text"
-          id="user-name"
-          label="Name"
-          value={ address }
-          onChange={ (e) => setAdress(e.target.value) }
-        />
-        <Button
-          type="submit"
-          testid="customer_checkout__button-submit-order"
+
+      <label htmlFor="responsavel">
+        P.Vendedora Responsável:
+        <select
+          data-testid="customer_checkout__select-seller"
+          id="responsavel"
+          name="estado"
         >
-          Finalizar Pedido
-        </Button>
-      </form>
+          <option value="fulana1">fulana1</option>
+          <option value="fulana2">fulana2</option>
+          <option value="fulana3">fulana3</option>
+        </select>
+      </label>
+      <TextInput
+        placeholder="Numero"
+        data-testid="customer_checkout__input-addressNumber"
+        type="number"
+        id="user-numero"
+        label="Numero"
+        value={ number }
+        onChange={ (e) => setNumber(e.target.value) }
+      />
+      <TextInput
+        placeholder="Digite o endereço"
+        data-testid="customer_checkout__input-address"
+        type="text"
+        id="user-name"
+        label="Name"
+        value={ address }
+        onChange={ (e) => setAdress(e.target.value) }
+      />
+      <Button
+        onClick={ handleClick }
+        type="button"
+        testid="customer_checkout__button-submit-order"
+      >
+        Finalizar Pedido
+      </Button>
 
     </div>
   );
