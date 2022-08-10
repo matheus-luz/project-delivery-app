@@ -5,9 +5,9 @@ const config = require('../database/config/config');
 
 const sequelize = new Sequelize(config.development);
 
-const createSale = async (body, tokenData) => {
+const createSale = async (body, user) => {
   const { sellerId, totalPrice, deliveryAddress, deliveryNumber, productIds, quantity } = body;
-  const { userId } = tokenData;
+  const { userId } = user;
 
   const { count } = await Product.findAndCountAll({ where: { id: productIds } });
 
