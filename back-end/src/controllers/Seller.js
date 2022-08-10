@@ -1,4 +1,5 @@
 const service = require('../services/Seller');
+const SallerError = require('../utils/sellerError');
 
 const getOrders = async (req, res) => {
   const { status, data } = await service.getInfo();
@@ -16,11 +17,13 @@ const findById = async (req, res) => {
 
 const update = async (req, res) => {
   const { id } = req.params;
-  const { statusNew } = req.body;
+  const { status } = req.body;
 
-  const { status, data } = await service.update(id, statusNew);
+  if (!status) throw new SallerError(400, 'Status does not exist');
 
-  return res.status(status).json(data);
+  const { statusCode, data } = await service.update(id, status);
+
+  return res.status(statusCode).json(data);
 };
 
 module.exports = {

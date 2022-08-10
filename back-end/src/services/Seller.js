@@ -44,10 +44,10 @@ const getById = async (id) => {
   return { status: 200, data: orderById };
 };
 
-const update = async (id, statusNew) => {
-  await Sale.update({ status: statusNew }, { where: id });
+const update = async (id, status) => {
+  await Sale.update({ status }, { where: { id } });
 
-  return { status: 200, data: { message: 'Update' } };
+  return { statusCode: 200, data: { message: 'Update' } };
 };
 
 module.exports = {
