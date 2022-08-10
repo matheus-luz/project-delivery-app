@@ -49,8 +49,8 @@ const readOne = async (id) => {
   return order;
 };
 
-const updateSaleStatus = async (id, status) => {
-  await Sale.update({ status }, { where: { id } });
+const updateSaleStatus = async (id) => {
+  await Sale.update({ status: 'Entregue' }, { where: { id } });
 };
 
 module.exports = {
