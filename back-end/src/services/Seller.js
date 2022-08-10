@@ -1,6 +1,7 @@
-const { User, Sale } = require('../database/models');
+const { User, Sale, Product } = require('../database/models');
+const SellerError = require('../utils/sellerError');
 
-const formatResponse = (orders) => orders.map((order) => ({
+const formatOrders = (orders) => orders.map((order) => ({
   user: order.user,
   seller: order.seller,
   order: {
@@ -20,15 +21,37 @@ const getInfo = async () => {
         { model: User, as: 'user', attributes: { exclude: ['id', 'password'] } }, 
         { model: User, as: 'seller', attributes: { exclude: ['id', 'password'] } },
       ],
-      attributes: { exclude: ['id', 'userId', 'sellerId'] },
+      attributes: { exclude: ['userId', 'sellerId'] },
     },
 );
 
-  const data = formatResponse(orders);
+  const data = formatOrders(orders);
 
   return { status: 200, data };
 };
 
+const getById = async (id) => {
+  const orderById = await Sale.findByPk(id, {
+    include: [{ model: User, as: 'seller', attributes: ['name'] },
+    { model: Product, as: 'products', through: { attributes: ['quantity'], as: 'salesProducts' } },
+    ],
+    attributes: { 
+      exclude: ['userId', 'sellerId', 'totalPrice', 'deliveryAddress', 'deliveryNumber'] },
+  });
+
+  if (!orderById) throw new SellerError(404, 'Order by id doesn\'t exists');
+
+  return { status: 200, data: orderById };
+};
+
+const update = async (id, status) => {
+  await Sale.update({ status }, { where: { id } });
+
+  return { statusCode: 200, data: { message: 'Update' } };
+};
+
 module.exports = {
   getInfo,
+  getById,
+  update,
 };
