@@ -2,7 +2,7 @@ const Joi = require('joi');
 const SellerError = require('../utils/sellerError');
 
 const schema = Joi.object({
-  statusNew: Joi.string().min(10).required(),
+  status: Joi.string().min(10).required(),
 });
 
 module.exports = (req, _res, next) => {
