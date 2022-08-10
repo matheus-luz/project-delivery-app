@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     totalPrice: DataTypes.DECIMAL,
     deliveryAddress: DataTypes.STRING,
     deliveryNumber: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'Pendente'
+    },
     saleDate: {
       type: DataTypes.DATE,
       get() {
@@ -15,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
           day: "2-digit"
         })
       }
-    },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: 'Pentende'
     },
   },
   {
