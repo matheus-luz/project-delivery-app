@@ -1,12 +1,13 @@
 const { User, Sale, Product } = require('../database/models');
+const SellerError = require('../utils/sellerError');
 
-const formatResponse = (orders) => orders.map((order) => ({
+const formatOrders = (orders) => orders.map((order) => ({
   user: order.user,
   seller: order.seller,
-  request: {
+  order: {
     address: order.deliveryAddress,
     adressNumber: order.deliveryNumber,
-    data: order.saleDate,
+    saleDate: order.saleDate,
     totalPrice: order.totalPrice,
     status: order.status,
   },
@@ -24,13 +25,13 @@ const getInfo = async () => {
     },
 );
 
-    const data = formatResponse(orders);
+  const data = formatOrders(orders);
 
   return { status: 200, data };
 };
 
 const getById = async (id) => {
-  const find = await Sale.findByPk(id, {
+  const orderById = await Sale.findByPk(id, {
     include: [{ model: User, as: 'seller', attributes: ['name'] },
     { model: Product, as: 'products', through: { attributes: ['quantity'], as: 'salesProducts' } },
     ],
@@ -38,7 +39,9 @@ const getById = async (id) => {
       exclude: ['userId', 'sellerId', 'totalPrice', 'deliveryAddress', 'deliveryNumber'] },
   });
 
-  return { status: 200, data: find };
+  if (!orderById) throw new SellerError(404, 'Order by id doesn\'t exists');
+
+  return { status: 200, data: orderById };
 };
 
 module.exports = {
