@@ -13,7 +13,6 @@ app.use(express.json());
 app.use('/login', LoginRouter);
 app.use('/customer', CustomerRouter);
 app.use('/register', RegisterRouter);
-
 app.use('/admin', AdminRouter);
 
 app.use(error);

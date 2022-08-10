@@ -5,4 +5,6 @@ const authToken = require('../middlewares/authToken');
 
 router.get('/products', authToken, rescue(CustomerController.readProducts));
 
+router.get('/orders/:id', authToken, rescue(CustomerController.readOne));
+
 module.exports = router;

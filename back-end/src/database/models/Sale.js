@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
           year: "numeric",
           month: "2-digit",
           day: "2-digit"
-      })
+        })
       }
     },
     status: DataTypes.STRING,
