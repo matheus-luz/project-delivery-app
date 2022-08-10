@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header';
+import AdressDetails from '../../components/checkout/AdressDetails';
 
 function Checkout() {
   return (
     <div>
-      <Header />
+      <AdressDetails />
     </div>
   );
 }
