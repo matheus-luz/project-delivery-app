@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     userId: DataTypes.INTEGER,
     sellerId: DataTypes.INTEGER,
-    totalPrice: DataTypes.DECIMAL,
+    totalPrice: DataTypes.DECIMAL(10,2),
     deliveryAddress: DataTypes.STRING,
     deliveryNumber: DataTypes.STRING,
     status: {
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     saleDate: {
       type: DataTypes.DATE,
       get() {
-        return this.getDataValue('saleDate').toLocaleString('pt-BR', {
+        return this.getDataValue('saleDate')?.toLocaleString('pt-BR', {
           year: "numeric",
           month: "2-digit",
           day: "2-digit"
