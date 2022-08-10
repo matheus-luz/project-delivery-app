@@ -24,7 +24,7 @@ const getInfo = async () => {
     },
 );
 
-    const data = formatResponse(orders);
+  const data = formatResponse(orders);
 
   return { status: 200, data };
 };
