@@ -14,7 +14,17 @@ const findById = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { statusNew } = req.body;
+
+  const { status, data } = await service.update(id, statusNew);
+
+  return res.status(status).json(data);
+};
+
 module.exports = {
   getOrders,
   findById,
+  update,
 };
