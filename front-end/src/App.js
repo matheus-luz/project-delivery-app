@@ -10,16 +10,16 @@ import UserContextProvider from './context/userContext';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={ <Home /> } />
-          <UserContextProvider>
+      <UserContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={ <Home /> } />
             <Route path="/login" element={ <Login /> } />
             <Route path="/register" element={ <Register /> } />
             <Route path="/customer/products" element={ <Products /> } />
-          </UserContextProvider>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </UserContextProvider>
     </div>
   );
 }

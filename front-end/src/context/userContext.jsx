@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 
-const userContext = React.createContext(
+const UserContext = createContext(
   {
     user: {
       name: '',
@@ -21,15 +21,26 @@ function UserContextProvider({ children }) {
     token: '',
   });
 
+  useEffect(() => {
+    const localStorageUser = localStorage.getItem('user');
+    if (localStorageUser) {
+      setUser(JSON.parse(localStorageUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [user]);
+
   const value = useMemo(() => ({
     user,
     setUser,
   }), [user]);
 
   return (
-    <userContext.Provider value={ value }>
+    <UserContext.Provider value={ value }>
       {children}
-    </userContext.Provider>
+    </UserContext.Provider>
   );
 }
 
@@ -38,4 +49,4 @@ UserContextProvider.propTypes = {
 };
 
 export default UserContextProvider;
-export { userContext };
+export { UserContext as userContext };
