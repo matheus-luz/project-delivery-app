@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Library/Button';
 import TextInput from '../../components/Library/TextInput';
+import { userContext } from '../../context/userContext';
 import validateEmail from '../../utils/emailValidator';
 
 function Login() {
@@ -11,6 +12,8 @@ function Login() {
   const [invalidLogin, setInvalidLogin] = useState(false);
   const passwordLenght = 6;
   const navigate = useNavigate();
+
+  const { setUser } = useContext(userContext);
 
   useEffect(() => {
     if (validateEmail(email) && password.length >= passwordLenght) {
@@ -30,12 +33,13 @@ function Login() {
         password,
       }),
     });
+
     if (!response.ok) {
       setInvalidLogin(true);
     } else {
       setInvalidLogin(false);
       const data = await response.json();
-      localStorage.setItem('user', JSON.stringify(data));
+      setUser(data);
       if (data.role === 'customer') {
         navigate('/customer/products');
       }
