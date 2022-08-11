@@ -2,7 +2,6 @@ const OrderService = require('../services/Order');
 
 const readOrders = async (req, res) => {
   const { user } = req;
-  console.log(user);
   const formatedOrders = await OrderService.readOrders(user);
 
   return res.status(200).json(formatedOrders);
