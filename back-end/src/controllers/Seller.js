@@ -1,11 +1,17 @@
 const service = require('../services/Seller');
+const CustomError = require('../utils/customError');
 
-const getOrders = async (_req, res) => {
-  const { status, data } = await service.getInfo();
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
 
-  return res.status(status).json(data);
+  if (!status) throw new CustomError(400, 'Status does not exist');
+
+  const { statusCode, data } = await service.update(id, status);
+
+  return res.status(statusCode).json(data);
 };
 
 module.exports = {
-  getOrders,
+  update,
 };
