@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 function Counter({ product }) {
   const [counter, setCounter] = useState(0);
-  console.log(product);
 
   return (
     <div>

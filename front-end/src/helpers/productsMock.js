@@ -1,17 +1,20 @@
 export default [{
   id: 1,
+  quantity: 3,
   name: 'Skol Lata 250ml',
   price: 2.20,
   urlImage: 'http://localhost:3001/images/skol_lata_350ml.jpg',
 },
 {
   id: 2,
+  quantity: 2,
   name: 'Heinelken 600m',
   price: 7.50,
   urlImage: 'http://localhost:3001/images/heineken_600ml.jpg',
 },
 {
   id: 3,
+  quantity: 5,
   name: 'Antarctica Pilsen 300ml',
   price: 2.49,
   urlImage: 'http://localhost:3001/images/antarctica_pilsen_300ml.jpg',
