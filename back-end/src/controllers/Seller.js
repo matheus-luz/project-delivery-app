@@ -1,20 +1,6 @@
 const service = require('../services/Seller');
 const SallerError = require('../utils/sellerError');
 
-const getOrders = async (_req, res) => {
-  const { status, data } = await service.getInfo();
-
-  return res.status(status).json(data);
-};
-
-const findById = async (req, res) => {
-  const { id } = req.params;
-
-  const { status, data } = await service.getById(id);
-
-  return res.status(status).json(data);
-};
-
 const update = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -27,7 +13,5 @@ const update = async (req, res) => {
 };
 
 module.exports = {
-  getOrders,
-  findById,
   update,
 };
