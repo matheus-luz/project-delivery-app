@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 
-function MeusPedidos() {
+function MyDetails() {
   return (
     <div>
       <Header />
@@ -34,4 +34,4 @@ function MeusPedidos() {
     </div>
   );
 }
-export default MeusPedidos;
+export default MyDetails;

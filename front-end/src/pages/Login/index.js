@@ -58,7 +58,7 @@ function Login() {
     <div className="flex items-center justify-center h-screen w-screen">
       <div>
         <div>Imagem</div>
-        <h1 className="text-3xl text-center my-3">APP</h1>
+        <h1 className="text-3xl text-center my-3">DELIVERY APP</h1>
         <form
           onSubmit={ handleSubmit }
           className={ `bg-slate-100 border-2 

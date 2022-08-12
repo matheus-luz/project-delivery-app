@@ -6,9 +6,9 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import CustomerProducts from './pages/CustomerProducts';
 import UserContextProvider from './context/userContext';
-import MeusPedidos from './pages/MeusPedidos';
+import MyOrders from './pages/MyOrders';
 import Checkout from './pages/Checkout';
-import DetalhesPedido from './pages/DetalhesPedido';
+import DetailsOrders from './pages/DetailsOrders';
 import SellerSales from './pages/Seller';
 import SellerDetails from './pages/Seller/Details';
 import SaleStatusUpdate from './pages/Seller/Details/Status';
@@ -25,8 +25,8 @@ function App() {
             <Route path="/register" element={ <Register /> } />
             <Route path="/customer/products" element={ <CustomerProducts /> } />
             <Route path="/customer/checkout" element={ <Checkout /> } />
-            <Route path="/customer/orders" element={ <MeusPedidos /> } />
-            <Route path="/customer/orders/:id" element={ <DetalhesPedido /> } />
+            <Route path="/customer/orders" element={ <MyOrders /> } />
+            <Route path="/customer/orders/:id" element={ <DetailsOrders /> } />
             <Route path="/seller/orders" element={ <SellerSales /> } />
             <Route path="/seller/orders/:id" element={ <SellerDetails /> } />
             <Route path="/seller/orders/update/:id" element={ <SaleStatusUpdate /> } />

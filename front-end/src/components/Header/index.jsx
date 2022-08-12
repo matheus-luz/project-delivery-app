@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../context/userContext';
 
-function Header({ children }) {
+function Header({ screen }) {
   const { user } = useContext(userContext);
   const navigate = useNavigate();
 
@@ -14,8 +14,15 @@ function Header({ children }) {
 
   return (
     <nav className="bg-trybe-primary flex h-12 items-center">
-      <div className="flex gap-3">
-        {children}
+      <div
+        className="
+      flex gap-3
+      text-white
+      font-bold
+      text-2xl
+      px-4"
+      >
+        {screen}
       </div>
       <h3
         data-testid="customer_products__element-navbar-user-full-name"
@@ -51,7 +58,7 @@ function Header({ children }) {
 }
 
 Header.propTypes = {
-  children: PropTypes.node.isRequired,
+  screen: PropTypes.string.isRequired,
 };
 
 export default Header;
