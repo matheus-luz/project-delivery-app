@@ -1,7 +1,7 @@
 const chai = require('chai');
 const { stub } = require('sinon');
 const chaiHttp = require('chai-http');
-const { User } = require('../database/models');
+const { User, Sale } = require('../database/models');
 const app = require('../api/app');
 
 chai.use(chaiHttp);
@@ -64,12 +64,12 @@ describe('Method GET /seller/orders', () => {
 
   before(() => {
     stub(User, 'findOne').resolves(sellerMock);
-    stub(User, 'findAll').resolves(orders);
+    stub(Sale, 'findAll').resolves(orders);
   });
 
   after(() => {
     User.findOne.restore();
-    User.findAll.restore();
+    Sale.findAll.restore();
   });
 
   describe('If the request is successful', () => {
@@ -136,12 +136,36 @@ describe('Method GET /seller/orders/:id', () => {
 
   before(() => {
     stub(User, 'findOne').resolves(sellerMock);
-    stub(User, 'findAll').resolves(order);
+    stub(Sale, 'findByPk')
+      .onCall(0).resolves(null)
+      .onCall(1).resolves(order);
   });
 
   after(() => {
     User.findOne.restore();
-    User.findAll.restore();
+    Sale.findByPk.restore();
+  });
+
+  describe('If the order doesn\'t exists on the DB', () => {
+    let response;
+
+    before( async () => {
+      const { body: { token } } = await chai.request(app).post('/login').send({
+        email: "fulana@deliveryapp.com",
+        password: "fulana@123"
+      });
+      response = await chai.request(app).get('/seller/orders/9999').set('authorization', token);
+    });
+
+    it('should return the status code 404', () => {
+      expect(response).to.have.status(404);
+    });
+    it('should return an object in the body', () => {
+      expect(response.body).to.be.an('object');
+    });
+    it('should return the error message ""Order doesn\'t exists"', () => {
+      expect(response.body.message).to.be.equal('Order doesn\'t exists');
+    });
   });
 
   describe('If the request is successful', () => {
@@ -189,10 +213,12 @@ describe('Method PATCH /seller/orders/update/:id', () => {
 
   before(() => {
     stub(User, 'findOne').resolves(sellerMock);
+    stub(Sale, 'update').resolves();
   });
 
   after(() => {
     User.findOne.restore();
+    Sale.update.restore();
   });
 
   describe('If the status passed isn\'t a valid one', () => {
@@ -227,9 +253,8 @@ describe('Method PATCH /seller/orders/update/:id', () => {
         email: "fulana@deliveryapp.com",
         password: "fulana@123"
       });
-      response = await chai.request(app).patch('/seller/orders/update/1').set('authorization', token).send({
-        status: 'Preparando'
-      });
+      response = await chai.request(app).patch('/seller/orders/update/1').set('authorization', token)
+        .send({ status: 'Preparando' });
     });
 
     it('should return the status code 200', () => {

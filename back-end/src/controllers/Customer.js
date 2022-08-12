@@ -14,12 +14,6 @@ const readProducts = async (_req, res) => {
   return res.status(200).json(products);
 };
 
-const readOne = async (req, res) => {
-  const { id } = req.params;
-  const order = await CustomerService.readOne(id);
-  return res.status(200).json(order);
-};
-
 const updateSaleStatus = async (req, res) => {
   const { id } = req.params;
 
@@ -32,5 +26,4 @@ module.exports = {
   createSale,
   readProducts,
   updateSaleStatus,
-  readOne,
 };
