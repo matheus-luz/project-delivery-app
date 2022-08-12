@@ -1,5 +1,5 @@
 # API Endpoints
-Essa API possui os seguintes endpoints:
+Essa API possui os endpoints abaixo:
 
 <details>
 
@@ -18,6 +18,26 @@ Essa API possui os seguintes endpoints:
 | 11 | `GET - http://localhost:3001/seller/orders` | . |
 | 12 | `GET - http://localhost:3001/seller/orders/:id` | . |
 | 13 | `PATCH - http://localhost:3001/seller/orders/update/:id` | . |  
+
+</details>
+
+## Validando token nas requisições
+
+- Todo o endpoint que <strong>NÃO</strong> precisar validar o `token` terá o símbolo :x: ao lado. Para todos os demais, será necessário fazer a validação de credenciais de autenticação informadas no cabeçalho da requisição HTTP authorization.
+
+<details>
+
+- Se o token for inexistente o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+
+            {
+              "message": "Token not found"
+            }
+
+ - Se o token for inválido o resultado retornado deverá ser conforme exibido abaixo, com um status http `401`:
+
+            {
+              "message": "Expired or invalid token"
+            }
 
 </details>
 
@@ -70,6 +90,13 @@ Os exemplos a seguir utilizam o [Isomnia](https://insomnia.rest/) para fazer as 
               "email": "newCustomer@email.com",
               "password": "ad43b82182a8082c74e3cc2d1a88e20e",
               "role": "customer"
+            },
+            {
+            "id": 5,
+            "name": "newSeller012",
+            "email": "newSeller@email.com",
+            "password": "0f6461616ef3c8e2bd5c4f81801f1ff2",
+            "role": "seller"
             }
           ]
 
@@ -294,11 +321,13 @@ Os exemplos a seguir utilizam o [Isomnia](https://insomnia.rest/) para fazer as 
           {
             "message": "Updated"
           }
+  
+:warning: O pedido será atualizado para `Entregue`, não sendo necessária qualquer informação no corpo da requisição. Obs.: Mesmo que alguma informação seja passada, o status do pedido, ainda sim, será atualizado para `Entregue`, uma vez que esta é a única atualização de status que o `customer` pode efetuar.
 
 </details>
 
 ## III - Login (`/login`)
-#### [POST `/login`]
+#### [POST `/login`] :x:
 
 <details>
 
@@ -322,7 +351,7 @@ Os exemplos a seguir utilizam o [Isomnia](https://insomnia.rest/) para fazer as 
 </details>
 
 ## IV - Register (`/register`)
-#### [POST `/register`]
+#### [POST `/register`] :x:
 
 <details>
 
@@ -441,11 +470,20 @@ Os exemplos a seguir utilizam o [Isomnia](https://insomnia.rest/) para fazer as 
 #### [PATCH `/seller/orders/update/:id`]
 
 <details>
+  
++ Request (application/json)
++ Body
+
+          {
+	          "status": "Preparando"
+          }
 
 + Response 200 Ok (application/json)
 
           {
             "message": "Updated"
           }
+  
+:warning: Para essa requisição será necessário informar em seu corpo o status do pedido, podendo ser este `Preparando` ou `Em Trânsito`.
 
 </details>
