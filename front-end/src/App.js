@@ -34,7 +34,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </UserContextProvider>
-
     </div>
   );
 }

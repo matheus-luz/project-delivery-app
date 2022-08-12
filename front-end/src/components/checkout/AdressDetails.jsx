@@ -11,7 +11,7 @@ function AdressDetails() {
 
   const handleClick = () => {
     navigate('/customer/orders/:1', { replace: true });
-  }; // id é retornado da requisição da venda; precisa pegalo ainda
+  }; // id é retornado da requisição da venda; precisa pega-lo ainda
   return (
     <div>
       <h3>Detalhes e Endereço para Entrega</h3>

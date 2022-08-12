@@ -42,6 +42,10 @@ function Login() {
       setUser(data);
       if (data.role === 'customer') {
         navigate('/customer/products');
+      } if (data.role === 'seller') {
+        navigate('/seller/orders');
+      } if (data.role === 'administrator') {
+        navigate('/admin/manage');
       }
     }
   };
