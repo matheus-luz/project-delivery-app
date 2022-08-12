@@ -24,7 +24,7 @@ const readOrders = async (user) => {
       attributes: { exclude: ['userId', 'sellerId'] },
     },
   );
-  
+
   const formatedOrders = formatOrders(orders);
 
   if (user.role === 'customer') {
