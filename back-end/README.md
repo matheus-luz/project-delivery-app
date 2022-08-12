@@ -5,19 +5,19 @@ Essa API possui os endpoints abaixo:
 
 |  | Método | Descrição |
 |---|---|---|
-| 01 | `POST - http://http://localhost:3001/admin` | . |
-| 02 | `GET - http://http://localhost:3001/admin` | . |
-| 03 | `DELETE - http://http://localhost:3001/admin` | . |
-| 04 | `POST - http://localhost:3001/customer/checkout` | . |  
-| 05 | `GET - http://localhost:3001/customer/products` | . |
-| 06 | `GET - http://localhost:3001/customer/orders` | . |
-| 07 | `GET - http://localhost:3001/customer/orders/:id` | . |
-| 08 | `PATCH - http://localhost:3001/customer/orders/update/:id` | . |
-| 09 | `POST - http://localhost:3001/login` | . |
-| 10 | `POST - http://localhost:3001/register` | . |  
-| 11 | `GET - http://localhost:3001/seller/orders` | . |
-| 12 | `GET - http://localhost:3001/seller/orders/:id` | . |
-| 13 | `PATCH - http://localhost:3001/seller/orders/update/:id` | . |  
+| 01 | `POST - http://http://localhost:3001/admin` | Cria um novo usuário (`customer` ou `seller`). |
+| 02 | `GET - http://http://localhost:3001/admin` | Busca todos os usuários (exceto `administrator`). |
+| 03 | `DELETE - http://http://localhost:3001/admin` | Deleta um usuário. |
+| 04 | `POST - http://localhost:3001/customer/checkout` | Cria um novo pedido. |  
+| 05 | `GET - http://localhost:3001/customer/products` | Busca todos os produtos. |
+| 06 | `GET - http://localhost:3001/customer/orders` | Busca todos os pedidos do cliente. |
+| 07 | `GET - http://localhost:3001/customer/orders/:id` | Busca um pedido específico. |
+| 08 | `PATCH - http://localhost:3001/customer/orders/update/:id` | Atualiza o status do pedido (`Entregue`). |
+| 09 | `POST - http://localhost:3001/login` | Efetua o login do usuário. |
+| 10 | `POST - http://localhost:3001/register` | Cria um novo usuário (apenas `customer`). |  
+| 11 | `GET - http://localhost:3001/seller/orders` | Busca todos os pedidos do vendedor. |
+| 12 | `GET - http://localhost:3001/seller/orders/:id` | Busca um pedido específico. |
+| 13 | `PATCH - http://localhost:3001/seller/orders/update/:id` | Atualiza o status do pedido (`Preparando` ou `Em Trânsito`). |  
 
 </details>
 
@@ -44,7 +44,7 @@ Essa API possui os endpoints abaixo:
 ## Usando a API
 Os exemplos a seguir utilizam o [Isomnia](https://insomnia.rest/) para fazer as requisições, no entanto você pode utilizar a ferramenta que preferir.
 
-## I - Admin (`/admin`)
+## I - Administrator (`/admin`)
 #### [POST `/admin`]
 
 <details>
@@ -484,6 +484,6 @@ Os exemplos a seguir utilizam o [Isomnia](https://insomnia.rest/) para fazer as 
             "message": "Updated"
           }
   
-:warning: Para essa requisição será necessário informar em seu corpo o status do pedido, podendo ser este `Preparando` ou `Em Trânsito`.
+:warning: Para essa requisição, será necessário informar em seu corpo o status do pedido, podendo ser este `Preparando` ou `Em Trânsito`.
 
 </details>
