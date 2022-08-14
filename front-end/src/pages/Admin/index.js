@@ -35,7 +35,7 @@ function Admin() {
     })();
   }, []);
 
-  // 1 - Caso 'adminData' seja 'true':
+  // 1 - Caso 'renderUsers' seja 'true':
   // 1.1 - busca os usuários no banco de dados e amarzena no estado 'users',
   // 1.2 - modifica o estado de 'renderUsers' para 'false'.
   useEffect(() => {
@@ -69,8 +69,8 @@ function Admin() {
 
   // 1 - Caso nome e email não existam no banco de dados:
   // 1.1 - cria um novo usuário,
-  // 1.2 - modifica o estado de 'renderUsers' para 'false',
-  // 1.3 - limpa os inputs.
+  // 1.2 - modifica o estado de 'renderUsers' para 'true',
+  // 1.3 - modifica o estado de 'userExist' para 'false' e limpa os inputs.
   // 2 - Do contrário: modifica o estado de 'userExist' para 'true'.
   const handleRegisterBtn = async (e) => {
     e.preventDefault();
