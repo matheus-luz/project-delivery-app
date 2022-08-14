@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TextInput from '../../components/Library/TextInput';
 
 const inputs = {
   name: '',
@@ -82,42 +83,49 @@ function Admin() {
     <div style={ { margin: '20px 100px' } }>
       <h1>Cadastrar novo usuário</h1>
       <div>
-        <form>
-          <input
+        <form style={ { display: 'flex' } }>
+          <TextInput
+            data-testid="admin_manage__input-name"
+            id="admin_manage__input-name"
+            label="Nome"
             name="name"
             onChange={ handleInputOnChange }
             placeholder="Nome e sobrenome"
-            // eslint-disable-next-line sonarjs/no-duplicate-string
-            style={ { border: '1px solid black' } }
             type="text"
             value={ inputsOnChange.name }
           />
-          <input
+          <TextInput
+            data-testid="admin_manage__input-email"
+            id="admin_manage__input-email"
+            label="Email"
             name="email"
             onChange={ handleInputOnChange }
             placeholder="seu-email@site.com.br"
-            style={ { border: '1px solid black' } }
             type="text"
             value={ inputsOnChange.email }
           />
-          <input
+          <TextInput
+            data-testid="admin_manage__input-password"
+            id="admin_manage__input-password"
+            label="Senha"
             name="password"
             onChange={ handleInputOnChange }
             placeholder="******"
-            style={ { border: '1px solid black' } }
             type="password"
             value={ inputsOnChange.password }
           />
           <select
+            data-testid="admin_manage__select-role"
             name="role"
             onChange={ handleInputOnChange }
-            style={ { border: '1px solid black' } }
+            style={ { border: '2px solid black' } }
             value={ inputsOnChange.role }
           >
             <option value="seller">Vendedor</option>
             <option value="customer">Cliente</option>
           </select>
           <button
+            data-testid="admin_manage__button-register"
             onClick={ handleRegisterBtn }
             style={ { border: '1px solid black' } }
             type="button"
