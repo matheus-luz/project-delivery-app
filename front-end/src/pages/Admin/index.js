@@ -24,24 +24,27 @@ function Admin() {
   const getItem = (key) => JSON.parse(localStorage
     .getItem(key)) || [];
 
+  // 1 - Busca as informações do administrador no LocalStorage e armazena no estado 'adminData'.
+  // 2 - Modifica o estado de 'renderUsers' para 'true'.
   useEffect(() => {
-    const getAdmin = async () => {
+    (async () => {
       const user = await getItem('user');
       setAdminData(user);
       setRenderUsers(true);
-    };
-    getAdmin();
+    })();
   }, []);
 
+  // 1 - Caso 'adminData' seja 'true':
+  // 1.1 - busca os usuários no banco de dados e amarzena no estado 'users',
+  // 1.2 - modifica o estado de 'renderUsers' para 'false'.
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetch(URL, {
+      const data = await fetch(URL, {
         method: 'GET',
         headers: {
           authorization: adminData.token,
         },
-      });
-      const data = await response.json();
+      }).then((response) => response.json());
       setUsers(data);
     };
     if (renderUsers) {
@@ -54,6 +57,7 @@ function Admin() {
     setInputsOnChange((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Verifica se nome ou email já existem no banco de dados.
   const validateResgister = () => {
     const userName = users.map((u) => u.name);
     const userEmail = users.map((u) => u.email);
@@ -62,6 +66,10 @@ function Admin() {
     return nameExist || emailExist;
   };
 
+  // 1 - Caso nome e email não existam no banco de dados:
+  // 1.1 - cria um novo usuário,
+  // 1.2 - modifica o estado de 'renderUsers' para 'false'.
+  // 2 - Do contrário: modifica o estado de 'userExist' para 'true'.
   const handleRegisterBtn = async (e) => {
     e.preventDefault();
     const validate = validateResgister();
@@ -81,12 +89,14 @@ function Admin() {
     }
   };
 
+  // Verifica se o nome, email e senha estão de acordo com as regras.
   const isDelBtnDisabled = () => (
     inputsOnChange.name.length >= MIN_NAME
     && validateEmail(inputsOnChange.email)
     && inputsOnChange.password.length >= MIN_PASSWORD
   );
 
+  // Deleta usuário do banco de dados e modifica o estado de 'renderUsers' para 'true'.
   const handleDeleteBtn = async ({ target: { value } }) => {
     await fetch(URL, {
       method: 'DELETE',
@@ -103,9 +113,9 @@ function Admin() {
     <div style={ { margin: '20px 100px' } }>
       {
         userExist
-        && (
-          <h1 data-testid="admin_manage__element-invalid-register">Já Registrado</h1>
-        )
+      && (
+        <h1 data-testid="admin_manage__element-invalid-register">Já Registrado</h1>
+      )
       }
       <h1>Cadastrar novo usuário</h1>
       <div>
