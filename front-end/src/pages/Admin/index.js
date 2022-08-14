@@ -17,8 +17,9 @@ const MIN_PASSWORD = 6;
 function Admin() {
   const [adminData, setAdminData] = useState({});
   const [inputsOnChange, setInputsOnChange] = useState(inputs);
-  const [renderUsers, setRenderUsers] = useState(false);
+  const [userExist, setUserExist] = useState(false);
   const [users, setUsers] = useState([]);
+  const [renderUsers, setRenderUsers] = useState(false);
 
   const getItem = (key) => JSON.parse(localStorage
     .getItem(key)) || [];
@@ -53,24 +54,39 @@ function Admin() {
     setInputsOnChange((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateResgister = () => {
+    const userName = users.map((u) => u.name);
+    const userEmail = users.map((u) => u.email);
+    const nameExist = userName.includes(inputsOnChange.name);
+    const emailExist = userEmail.includes(inputsOnChange.email);
+    return nameExist && emailExist;
+  };
+
+  const handleRegisterBtn = async (e) => {
+    e.preventDefault();
+    const validate = validateResgister();
+    console.log(validate);
+    if (!validate) {
+      await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: adminData.token,
+        },
+        body: JSON.stringify(inputsOnChange),
+      });
+      setRenderUsers(true);
+      setUserExist(false);
+    } else {
+      setUserExist(true);
+    }
+  };
+
   const isDelBtnDisabled = () => (
     inputsOnChange.name.length >= MIN_NAME
     && validateEmail(inputsOnChange.email)
     && inputsOnChange.password.length >= MIN_PASSWORD
   );
-
-  const handleRegisterBtn = async (e) => {
-    e.preventDefault();
-    await fetch(URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: adminData.token,
-      },
-      body: JSON.stringify(inputsOnChange),
-    });
-    setRenderUsers(true);
-  };
 
   const handleDeleteBtn = async ({ target: { value } }) => {
     await fetch(URL, {
@@ -86,6 +102,12 @@ function Admin() {
 
   return (
     <div style={ { margin: '20px 100px' } }>
+      {
+        userExist
+        && (
+          <h1 data-testid="admin_manage__element-invalid-register">Já Registrado</h1>
+        )
+      }
       <h1>Cadastrar novo usuário</h1>
       <div>
         <form style={ { display: 'flex' } }>
@@ -141,31 +163,58 @@ function Admin() {
         </form>
       </div>
       <h1>Lista de usuários</h1>
-      <div>
-        { users.map((e, index) => (
-          <div
-            key={ `user-${e.name}` }
-            style={ { display: 'flex' } }
-          >
-            <h1
-              data-testid="admin_manage__element-user-table-item-number-<index>"
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Tipo</th>
+            <th>Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          { users.map((e) => (
+            <tr
+              key={ e.id }
             >
-              { index + 1}
-            </h1>
-            <h1>{ e.name }</h1>
-            <h1>{ e.email }</h1>
-            <h1>{ e.role }</h1>
-            <button
-              onClick={ handleDeleteBtn }
-              style={ { border: '1px solid black' } }
-              type="button"
-              value={ e.id }
-            >
-              Excluir
-            </button>
-          </div>
-        )) }
-      </div>
+              <td
+                data-testid={ `admin_manage__element-user-table-item-number-${e.id}` }
+              >
+                { e.id }
+              </td>
+              <td
+                data-testid={ `admin_manage__element-user-table-name-${e.id}` }
+              >
+                { e.name }
+              </td>
+              <td
+                data-testid={ `admin_manage__element-user-table-email-${e.id}` }
+              >
+                { e.email }
+              </td>
+              <td
+                data-testid={ `admin_manage__element-user-table-role-${e.id}` }
+              >
+                { e.role === 'customer'
+                  ? e.role.replace('customer', 'Cliente')
+                  : e.role.replace('seller', 'Vendedor') }
+              </td>
+              <td>
+                <button
+                  data-testid={ `admin_manage__element-user-table-remove-${e.id}` }
+                  onClick={ handleDeleteBtn }
+                  style={ { border: '1px solid black' } }
+                  type="button"
+                  value={ e.id }
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
