@@ -59,13 +59,14 @@ function Admin() {
     const userEmail = users.map((u) => u.email);
     const nameExist = userName.includes(inputsOnChange.name);
     const emailExist = userEmail.includes(inputsOnChange.email);
-    return nameExist && emailExist;
+    return nameExist || emailExist;
   };
 
   const handleRegisterBtn = async (e) => {
     e.preventDefault();
     const validate = validateResgister();
     console.log(validate);
+    console.log(users);
     if (!validate) {
       await fetch(URL, {
         method: 'POST',
