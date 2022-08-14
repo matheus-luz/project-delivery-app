@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import validateEmail from '../../utils/emailValidator';
 import TextInput from '../../components/Library/TextInput';
+import validateEmail from '../../utils/emailValidator';
 
 const inputs = {
   name: '',
@@ -10,6 +10,9 @@ const inputs = {
 };
 
 const URL = 'http://localhost:3001/admin';
+
+const MIN_NAME = 12;
+const MIN_PASSWORD = 6;
 
 function Admin() {
   const [adminData, setAdminData] = useState({});
@@ -51,7 +54,9 @@ function Admin() {
   };
 
   const isDelBtnDisabled = () => (
-    validateEmail(adminData.email)
+    inputsOnChange.name.length >= MIN_NAME
+    && validateEmail(inputsOnChange.email)
+    && inputsOnChange.password.length >= MIN_PASSWORD
   );
 
   const handleRegisterBtn = async (e) => {
@@ -142,7 +147,11 @@ function Admin() {
             key={ `user-${e.name}` }
             style={ { display: 'flex' } }
           >
-            <h1>{ index + 1}</h1>
+            <h1
+              data-testid="admin_manage__element-user-table-item-number-<index>"
+            >
+              { index + 1}
+            </h1>
             <h1>{ e.name }</h1>
             <h1>{ e.email }</h1>
             <h1>{ e.role }</h1>
