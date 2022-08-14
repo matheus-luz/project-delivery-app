@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import TextInput from '../../components/Library/TextInput';
+import FormAdmin from '../../components/Admin/FormAdmin';
+import TableUser from '../../components/Admin/TableUser';
 import validateEmail from '../../utils/emailValidator';
 
 const inputs = {
@@ -68,7 +69,8 @@ function Admin() {
 
   // 1 - Caso nome e email não existam no banco de dados:
   // 1.1 - cria um novo usuário,
-  // 1.2 - modifica o estado de 'renderUsers' para 'false'.
+  // 1.2 - modifica o estado de 'renderUsers' para 'false',
+  // 1.3 - limpa os inputs.
   // 2 - Do contrário: modifica o estado de 'userExist' para 'true'.
   const handleRegisterBtn = async (e) => {
     e.preventDefault();
@@ -84,6 +86,7 @@ function Admin() {
       });
       setRenderUsers(true);
       setUserExist(false);
+      setInputsOnChange(inputs);
     } else {
       setUserExist(true);
     }
@@ -110,121 +113,27 @@ function Admin() {
   };
 
   return (
-    <div style={ { margin: '20px 100px' } }>
-      {
-        userExist
-      && (
-        <h1 data-testid="admin_manage__element-invalid-register">Já Registrado</h1>
-      )
-      }
-      <h1>Cadastrar novo usuário</h1>
-      <div>
-        <form style={ { display: 'flex' } }>
-          <TextInput
-            data-testid="admin_manage__input-name"
-            id="admin_manage__input-name"
-            label="Nome"
-            name="name"
-            onChange={ handleInputOnChange }
-            placeholder="Nome e sobrenome"
-            type="text"
-            value={ inputsOnChange.name }
-          />
-          <TextInput
-            data-testid="admin_manage__input-email"
-            id="admin_manage__input-email"
-            label="Email"
-            name="email"
-            onChange={ handleInputOnChange }
-            placeholder="seu-email@site.com.br"
-            type="text"
-            value={ inputsOnChange.email }
-          />
-          <TextInput
-            data-testid="admin_manage__input-password"
-            id="admin_manage__input-password"
-            label="Senha"
-            name="password"
-            onChange={ handleInputOnChange }
-            placeholder="******"
-            type="password"
-            value={ inputsOnChange.password }
-          />
-          <select
-            data-testid="admin_manage__select-role"
-            name="role"
-            onChange={ handleInputOnChange }
-            style={ { border: '2px solid black' } }
-            value={ inputsOnChange.role }
-          >
-            <option value="seller">Vendedor</option>
-            <option value="customer">Cliente</option>
-          </select>
-          <button
-            data-testid="admin_manage__button-register"
-            disabled={ !isDelBtnDisabled() }
-            onClick={ handleRegisterBtn }
-            style={ { border: '1px solid black' } }
-            type="button"
-          >
-            Cadastrar
-          </button>
-        </form>
+    <>
+      {/* Falta implementar o header */}
+      <h1>Header</h1>
+      <div style={ { margin: '20px 100px' } }>
+        { userExist && (
+          <h1 data-testid="admin_manage__element-invalid-register">Já Registrado</h1>
+        ) }
+        <h1>Cadastrar novo usuário</h1>
+        <FormAdmin
+          handleInputOnChange={ handleInputOnChange }
+          handleRegisterBtn={ handleRegisterBtn }
+          isDelBtnDisabled={ isDelBtnDisabled }
+          inputsOnChange={ inputsOnChange }
+        />
+        <h1>Lista de usuários</h1>
+        <TableUser
+          handleDeleteBtn={ handleDeleteBtn }
+          users={ users }
+        />
       </div>
-      <h1>Lista de usuários</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Tipo</th>
-            <th>Excluir</th>
-          </tr>
-        </thead>
-        <tbody>
-          { users.map((e) => (
-            <tr
-              key={ e.id }
-            >
-              <td
-                data-testid={ `admin_manage__element-user-table-item-number-${e.id}` }
-              >
-                { e.id }
-              </td>
-              <td
-                data-testid={ `admin_manage__element-user-table-name-${e.id}` }
-              >
-                { e.name }
-              </td>
-              <td
-                data-testid={ `admin_manage__element-user-table-email-${e.id}` }
-              >
-                { e.email }
-              </td>
-              <td
-                data-testid={ `admin_manage__element-user-table-role-${e.id}` }
-              >
-                { e.role === 'customer'
-                  ? e.role.replace('customer', 'Cliente')
-                  : e.role.replace('seller', 'Vendedor') }
-              </td>
-              <td>
-                <button
-                  data-testid={ `admin_manage__element-user-table-remove-${e.id}` }
-                  onClick={ handleDeleteBtn }
-                  style={ { border: '1px solid black' } }
-                  type="button"
-                  value={ e.id }
-                >
-                  Excluir
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    </>
   );
 }
 
