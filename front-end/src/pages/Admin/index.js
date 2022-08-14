@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import validateEmail from '../../utils/emailValidator';
 import TextInput from '../../components/Library/TextInput';
 
 const inputs = {
@@ -45,11 +46,13 @@ function Admin() {
     }
   }, [adminData, setUsers, renderUsers]);
 
-  console.log(users);
-
   const handleInputOnChange = ({ target: { name, value } }) => {
     setInputsOnChange((prev) => ({ ...prev, [name]: value }));
   };
+
+  const isDelBtnDisabled = () => (
+    validateEmail(adminData.email)
+  );
 
   const handleRegisterBtn = async (e) => {
     e.preventDefault();
@@ -65,9 +68,6 @@ function Admin() {
   };
 
   const handleDeleteBtn = async ({ target: { value } }) => {
-    console.log(value);
-    const id = { id: Number(value) };
-    console.log(id);
     await fetch(URL, {
       method: 'DELETE',
       headers: {
@@ -126,6 +126,7 @@ function Admin() {
           </select>
           <button
             data-testid="admin_manage__button-register"
+            disabled={ !isDelBtnDisabled() }
             onClick={ handleRegisterBtn }
             style={ { border: '1px solid black' } }
             type="button"
