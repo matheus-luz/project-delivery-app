@@ -7,7 +7,10 @@ export default function Seller() {
   return (
     <div>
       <Header>
-        <HeaderButton />
+        <HeaderButton
+          to=""
+          label="Pedidos"
+        />
       </Header>
       <CardOrder />
     </div>

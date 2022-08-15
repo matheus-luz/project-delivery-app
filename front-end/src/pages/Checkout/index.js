@@ -1,6 +1,6 @@
 import React from 'react';
-import AdressDetails from '../../components/checkout/AdressDetails';
-import FinalizingOrder from '../../components/checkout/finalizingOrder';
+import AdressDetails from '../../components/Checkout/AdressDetails';
+import FinalizingOrder from '../../components/Checkout/finalizingOrder';
 import Header from '../../components/Header';
 import HeaderButton from '../../components/Header/HeaderButton';
 
