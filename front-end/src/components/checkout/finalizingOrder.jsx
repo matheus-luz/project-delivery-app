@@ -1,6 +1,6 @@
 import React from 'react';
 import productsMock from '../../helpers/productsMock';
-import './FinalizarPedido.css';
+import './finalizingOrder.css';
 
 function FinalizarPedido() {
   const productsData = productsMock; // precisa pegar dadose colocar no lugar do mock
