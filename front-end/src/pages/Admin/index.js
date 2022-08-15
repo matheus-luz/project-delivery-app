@@ -51,14 +51,14 @@ function Admin() {
           testid="customer_products__element-navbar-link-products"
         />
       </Header>
-      <div style={{ margin: '20px 100px' }}>
+      <div style={ { margin: '20px 100px' } }>
         <h1>Cadastrar novo usuário</h1>
-        <FormAdmin getUsers={getUsers} />
+        <FormAdmin getUsers={ getUsers } />
         <h1>Lista de usuários</h1>
         {users && users.length > 0 && (
           <TableUser
-            users={users}
-            handleDelete={handleDelete}
+            users={ users }
+            handleDelete={ handleDelete }
           />
         )}
       </div>
