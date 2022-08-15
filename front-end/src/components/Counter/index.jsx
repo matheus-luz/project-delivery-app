@@ -1,8 +1,26 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { CartContext } from '../../context/cartContext';
 
 function Counter({ product }) {
   const [counter, setCounter] = useState(0);
+  const { cart, setCart } = useContext(CartContext);
+
+  const handleCounter = (operation) => {
+    if (operation === 'increment') {
+      setCounter((prev) => prev + 1);
+    } else {
+      setCounter((prev) => prev - 1);
+    }
+
+    const newCart = cart.map((item) => {
+      if (item.id === product.id) {
+        return { ...item, quantity: counter };
+      }
+      return item;
+    });
+    setCart(newCart);
+  };
 
   return (
     <div>
@@ -10,7 +28,7 @@ function Counter({ product }) {
         className="bg-trybe-primary text-lg px-2 text-white rounded-l-lg"
         data-testid={ ` customer_products__button-card-rm-item-${product.id}` }
         type="button"
-        onClick={ (() => setCounter(counter - 1)) }
+        onClick={ (() => handleCounter('decrease')) }
       >
         -
       </button>
@@ -26,7 +44,7 @@ function Counter({ product }) {
         className="bg-trybe-primary text-lg px-2 text-white rounded-r-lg"
         data-testid={ `customer_products__button-card-add-item-${product.id} ` }
         type="button"
-        onClick={ (() => setCounter(counter + 1)) }
+        onClick={ (() => handleCounter('increment')) }
       >
         +
       </button>
