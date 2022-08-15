@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 function TableUser(props) {
-  const { handleDeleteBtn, users } = props;
+  const { users, handleDelete } = props;
 
   return (
     <table>
@@ -15,27 +15,27 @@ function TableUser(props) {
         </tr>
       </thead>
       <tbody>
-        { users.map((e) => (
+        { users.map((e, index) => (
           <tr
             key={ e.id }
           >
             <td
-              data-testid={ `admin_manage__element-user-table-item-number-${e.id}` }
+              data-testid={ `admin_manage__element-user-table-item-number-${index}` }
             >
               { e.id }
             </td>
             <td
-              data-testid={ `admin_manage__element-user-table-name-${e.id}` }
+              data-testid={ `admin_manage__element-user-table-name-${index}` }
             >
               { e.name }
             </td>
             <td
-              data-testid={ `admin_manage__element-user-table-email-${e.id}` }
+              data-testid={ `admin_manage__element-user-table-email-${index}` }
             >
               { e.email }
             </td>
             <td
-              data-testid={ `admin_manage__element-user-table-role-${e.id}` }
+              data-testid={ `admin_manage__element-user-table-role-${index}` }
             >
               { e.role === 'customer'
                 ? e.role.replace('customer', 'Cliente')
@@ -43,8 +43,8 @@ function TableUser(props) {
             </td>
             <td>
               <button
-                data-testid={ `admin_manage__element-user-table-remove-${e.id}` }
-                onClick={ handleDeleteBtn }
+                data-testid={ `admin_manage__element-user-table-remove-${index}` }
+                onClick={ () => handleDelete(e.id) }
                 style={ { border: '1px solid black' } }
                 type="button"
                 value={ e.id }
@@ -60,7 +60,7 @@ function TableUser(props) {
 }
 
 TableUser.propTypes = {
-  handleDeleteBtn: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(PropTypes.shape({
     email: PropTypes.string,
     name: PropTypes.string,
