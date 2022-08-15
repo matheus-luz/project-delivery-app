@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import FormAdmin from '../../components/Admin/FormAdmin';
 import TableUser from '../../components/Admin/TableUser';
+import Header from '../../components/Header';
+import HeaderButton from '../../components/Header/HeaderButton';
 import validateEmail from '../../utils/emailValidator';
 
 const inputs = {
@@ -113,8 +115,13 @@ function Admin() {
 
   return (
     <>
-      {/* Falta implementar o header */}
-      <h1>Header</h1>
+      <Header>
+        <HeaderButton
+          to=""
+          label="GERENCIAR USUÁRIO"
+          testid="customer_products__element-navbar-link-products"
+        />
+      </Header>
       <div style={ { margin: '20px 100px' } }>
         { userExist && (
           <h1 data-testid="admin_manage__element-invalid-register">Já Registrado</h1>

@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../context/userContext';
 
-function Header({ screen }) {
+function Header({ children }) {
   const { user } = useContext(userContext);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function Header({ screen }) {
       text-2xl
       px-4"
       >
-        {screen}
+        {children}
       </div>
       <h3
         data-testid="customer_products__element-navbar-user-full-name"
@@ -58,7 +58,7 @@ function Header({ screen }) {
 }
 
 Header.propTypes = {
-  screen: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Header;
