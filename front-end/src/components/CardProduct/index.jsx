@@ -4,24 +4,38 @@ import Counter from '../Counter';
 function CardProduct({ product }) {
   return (
     <div
+      className={ ` 
+        ring-gray-400
+        ring-1 
+        ring-inset 
+        shadow-md
+        relative` }
       data-testid={ `customer_products__element-card-price-${product.id}` }
       key={ product.id }
     >
 
-      <p data-testid={ `customer_products__element-card-title-${product.id}` }>
-        {product.name}
+      <p
+        className="text-center absolute top-0 left-0 text-xl font-bold p-2"
+        data-testid={ `customer_products__element-card-price-${product.id}` }
+      >
+        { product.price }
       </p>
-
       <img
+        className="w-full p-2"
         data-testid={ `customer_products__img-card-bg-image-${product.id}` }
         src={ product.urlImage }
         alt={ product.name }
       />
+      <div className="flex flex-col justify-between items-center bg-slate-300 p-2 gap-3">
+        <p
+          className="text-center text-md font-bold text-gray-800"
+          data-testid={ `customer_products__element-card-title-${product.id}` }
+        >
+          {product.name}
+        </p>
 
-      <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-        { product.price }
-      </p>
-      <Counter product={ product } />
+        <Counter product={ product } />
+      </div>
     </div>
   );
 }
@@ -30,7 +44,7 @@ CardProduct.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
     urlImage: PropTypes.string.isRequired,
   }).isRequired,
 };

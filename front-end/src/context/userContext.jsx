@@ -15,16 +15,16 @@ const UserContext = createContext(
 
 function UserContextProvider({ children }) {
   const [user, setUser] = useState({
-    email: '',
     name: '',
+    email: '',
+    password: '',
     role: '',
-    token: '',
   });
 
   useEffect(() => {
-    const localStorageUser = localStorage.getItem('user');
-    if (localStorageUser) {
-      setUser(JSON.parse(localStorageUser));
+    const localUser = localStorage.getItem('user');
+    if (localUser) {
+      setUser(JSON.parse(localUser));
     }
   }, []);
 
@@ -32,10 +32,7 @@ function UserContextProvider({ children }) {
     localStorage.setItem('user', JSON.stringify(user));
   }, [user]);
 
-  const value = useMemo(() => ({
-    user,
-    setUser,
-  }), [user]);
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
     <UserContext.Provider value={ value }>
