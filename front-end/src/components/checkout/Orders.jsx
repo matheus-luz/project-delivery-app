@@ -1,9 +1,25 @@
 import React from 'react';
-import productsMock from '../../helpers/productsMock';
+// import productsMock from '../../helpers/productsMock';
 import './finalizingOrder.css';
 
-function FinalizarPedido() {
-  const productsData = productsMock; // precisa pegar dadose colocar no lugar do mock
+function Orders() {
+  const CART = 'cart';
+
+  const getItem = (key) => JSON.parse(localStorage
+    .getItem(key)) || [];
+
+  const productsData = getItem(CART);
+
+  const handleClickRemoverItem = () => {
+    // const product = products.filter((e) => Number(e.id) === Number(value));
+    // product[0].quantity = 0;
+    // console.log(products);
+    // console.log(productsData);
+    // console.log(product);
+    // setItem(CART, );
+    console.log('hello');
+  };
+
   return (
     <div className="tabela">
       <table border="1" cellPadding="20px">
@@ -46,15 +62,15 @@ function FinalizarPedido() {
                 data-testid={ `customer_checkout__element-order
                 -table-sub-total-${index}` }
               >
-                {item.price * item.quantity}
-                {/* funcao para somar preços de produtos individuais */}
+                {(item.price * item.quantity).toFixed(2)}
               </td>
               <td
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
               >
                 <button
+                  onClick={ handleClickRemoverItem }
                   type="button"
-                // onClick={ () => handleClickRemoverItem() } funcao para remover o item
+                  value={ item.id }
                 >
                   Remover
                 </button>
@@ -72,4 +88,4 @@ function FinalizarPedido() {
   );
 }
 
-export default FinalizarPedido;
+export default Orders;

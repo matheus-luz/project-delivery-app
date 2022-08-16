@@ -1,6 +1,6 @@
 import React from 'react';
 import AdressDetails from '../../components/checkout/AdressDetails';
-import FinalizingOrder from '../../components/checkout/finalizingOrder';
+import Orders from '../../components/checkout/Orders';
 import Header from '../../components/Header';
 import HeaderButton from '../../components/Header/HeaderButton';
 
@@ -19,7 +19,7 @@ function Checkout() {
           label="Meus pedidos"
         />
       </Header>
-      <FinalizingOrder />
+      <Orders />
       <AdressDetails />
     </div>
   );
