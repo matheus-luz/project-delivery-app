@@ -19,7 +19,7 @@ function CardProducts() {
       const json = await response.json();
       setCart(json.map((product) => ({ ...product, quantity: 0 })));
     }
-    fetchData();
+    if (user.token) fetchData();
   }, [user, setCart]);
 
   return (
