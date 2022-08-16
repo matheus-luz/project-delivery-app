@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { CartContext } from '../../context/cartContext';
 import { userContext } from '../../context/userContext';
 import CardProduct from '../CardProduct';
 
 function CardProducts() {
-  const [products, setProducts] = useState();
   const { user } = useContext(userContext);
-  const { setCart } = useContext(CartContext);
+  const { setCart, cart } = useContext(CartContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -18,7 +17,6 @@ function CardProducts() {
         },
       });
       const json = await response.json();
-      setProducts(json);
       setCart(json.map((product) => ({ ...product, quantity: 0 })));
     }
     fetchData();
@@ -26,7 +24,7 @@ function CardProducts() {
 
   return (
     <div className="flex flex-wrap gap-3 m-3">
-      {products && products.map((product) => (
+      {cart && cart.map((product) => (
         <CardProduct key={ product.id } product={ product } />
       ))}
     </div>
