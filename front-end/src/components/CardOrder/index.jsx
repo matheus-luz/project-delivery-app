@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function CardOrders() {
   const [orders, setOrders] = useState([]);
   const [userData, setUserData] = useState();
   const [renderOrders, setRenderOrders] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const URL = `http://localhost:3001${location.pathname}`;
 
   const getItem = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
@@ -19,7 +22,7 @@ export default function CardOrders() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch('http://localhost:3001/seller/orders', {
+      const data = await fetch(URL, {
         method: 'GET',
         headers: {
           authorization: userData.token,
@@ -31,29 +34,38 @@ export default function CardOrders() {
       fetchData();
       setRenderOrders(false);
     }
-  }, [renderOrders, userData, orders]);
+  }, [renderOrders, userData, orders, URL]);
 
-  const handleDetails = () => {
-    navigate(`/${route}/orders/${id}`);
+  const handleDetails = (id) => {
+    navigate(`${id}`);
   };
 
   return (
     <div>
       {
         orders.map((order) => (
-          <button key={ order.order.id } type="button" onClick={ handleDetails }>
-            <p>
-              {order}
+          <button
+            key={ order.id }
+            type="button"
+            onClick={ () => handleDetails(order.id) }
+          >
+            <p data-testid={ `seller_orders__element-order-${order.id}` }>
+              000
+              {order.id}
             </p>
-            <p>
-              {date}
+            <p data-testid={ `seller_orders__element-delivery-status-${order.id}` }>
+              {order.order.satus}
             </p>
-            <p>
+            <p data-testid={ `seller_orders__element-order-date-${order.id}` }>
+              {order.order.saleDate}
+            </p>
+            <p data-testid={ `seller_orders__element-card-price-${order.id}` }>
               R$
-              {totalPrice}
+              {order.order.totalPrice}
+
             </p>
-            <p>
-              {`${deliveryAddress}, ${deliveryNumber}`}
+            <p data-testid={ `seller_orders__element-card-address-${order.id}` }>
+              {`${order.order.address}, ${order.order.adressNumber}`}
             </p>
           </button>
         ))
@@ -61,7 +73,3 @@ export default function CardOrders() {
     </div>
   );
 }
-
-// CardOrders.propTypes = {
-//   route: PropTypes.string.isRequired,
-// };
