@@ -9,6 +9,17 @@ export default function CardOrders() {
   const location = useLocation();
 
   const URL = `http://localhost:3001${location.pathname}`;
+  let route;
+
+  const getRoute = () => {
+    if (URL.includes('seller')) {
+      route = 'seller';
+    } if (URL.includes('customer')) {
+      route = 'customer';
+    }
+    return route;
+  };
+  route = getRoute();
 
   const getItem = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
@@ -49,22 +60,22 @@ export default function CardOrders() {
             type="button"
             onClick={ () => handleDetails(order.id) }
           >
-            <p data-testid={ `seller_orders__element-order-${order.id}` }>
+            <p data-testid={ `${route}_orders__element-order-${order.id}` }>
               000
               {order.id}
             </p>
-            <p data-testid={ `seller_orders__element-delivery-status-${order.id}` }>
+            <p data-testid={ `${route}_orders__element-delivery-status-${order.id}` }>
               {order.order.satus}
             </p>
-            <p data-testid={ `seller_orders__element-order-date-${order.id}` }>
+            <p data-testid={ `${route}_orders__element-order-date-${order.id}` }>
               {order.order.saleDate}
             </p>
-            <p data-testid={ `seller_orders__element-card-price-${order.id}` }>
+            <p data-testid={ `${route}_orders__element-card-price-${order.id}` }>
               R$
               {order.order.totalPrice}
 
             </p>
-            <p data-testid={ `seller_orders__element-card-address-${order.id}` }>
+            <p data-testid={ `${route}_orders__element-card-address-${order.id}` }>
               {`${order.order.address}, ${order.order.adressNumber}`}
             </p>
           </button>
