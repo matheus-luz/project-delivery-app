@@ -15,6 +15,8 @@ function Counter({ product }) {
       products[index].quantity -= 1;
     }
 
+    if (products[index].quantity < 0) products[index].quantity = 0;
+
     setCart(products);
   };
 
