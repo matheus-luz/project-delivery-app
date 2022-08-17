@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
@@ -13,12 +13,13 @@ import SellerOrders from './pages/Seller';
 import SellerDetails from './pages/Seller/Details';
 import SaleStatusUpdate from './pages/Seller/Details/Status';
 import Admin from './pages/Admin';
+import CartContextProvider from './context/cartContext';
 
 function App() {
   return (
     <div className="App">
       <UserContextProvider>
-        <BrowserRouter>
+        <CartContextProvider>
           <Routes>
             <Route path="/" element={ <Home /> } />
             <Route path="/login" element={ <Login /> } />
@@ -32,7 +33,7 @@ function App() {
             <Route path="/seller/orders/update/:id" element={ <SaleStatusUpdate /> } />
             <Route path="/admin/manage" element={ <Admin /> } />
           </Routes>
-        </BrowserRouter>
+        </CartContextProvider>
       </UserContextProvider>
     </div>
   );
