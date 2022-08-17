@@ -43,7 +43,7 @@ function Orders() {
                   `customer_checkout__element-order-table-item-number-${index}`
                 }
               >
-                {item.id}
+                {index + 1}
               </td>
               <td
                 data-testid={ `customer_checkout__element-order-table-name-${index}` }
@@ -56,16 +56,18 @@ function Orders() {
                 {item.quantity}
               </td>
               <td
-                data-testid={ `customer_checkout__element-order
-                -table-unit-price-${index}` }
+                data-testid={
+                  `customer_checkout__element-order-table-unit-price-${index}`
+                }
               >
-                {item.price}
+                {item.price.replace(/\./, ',')}
               </td>
               <td
-                data-testid={ `customer_checkout__element-order
-                -table-sub-total-${index}` }
+                data-testid={
+                  `customer_checkout__element-order-table-sub-total-${index}`
+                }
               >
-                {(item.price * item.quantity).toFixed(2)}
+                {(item.price * item.quantity).toFixed(2).replace(/\./, ',')}
               </td>
               <td
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
@@ -85,7 +87,7 @@ function Orders() {
       <h3
         data-testid="customer_checkout__element-order-total-price"
       >
-        { getTotalPrice(productsData) }
+        { getTotalPrice(productsData).replace(/\./, ',') }
       </h3>
     </div>
 
