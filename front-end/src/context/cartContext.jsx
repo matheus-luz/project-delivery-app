@@ -9,17 +9,6 @@ const CartContext = createContext({
 function CartContextProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  // useEffect(() => {
-  //   const localCart = localStorage.getItem('cart');
-  //   if (localCart) {
-  //     setCart(JSON.parse(localCart));
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('cart', JSON.stringify(cart));
-  // }, [cart]);
-
   const value = useMemo(() => ({ cart, setCart }), [cart, setCart]);
 
   return (
