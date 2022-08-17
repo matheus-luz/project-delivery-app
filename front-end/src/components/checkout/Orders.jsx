@@ -1,23 +1,25 @@
-import React from 'react';
-// import productsMock from '../../helpers/productsMock';
+import React, { useEffect, useState } from 'react';
+import { getProducts, setProducts } from '../../utils/localStorage';
+import getTotalPrice from '../../utils/totalPrice';
 import './finalizingOrder.css';
 
 function Orders() {
-  const CART = 'cart';
+  const [productsData, setProductsData] = useState([]);
+  const [render, setRender] = useState([]);
 
-  const getItem = (key) => JSON.parse(localStorage
-    .getItem(key)) || [];
+  useEffect(() => {
+    const retrieveProducts = async () => {
+      const products = await getProducts();
+      setProductsData(products);
+      setRender(false);
+    };
+    if (render) retrieveProducts();
+  }, [render]);
 
-  const productsData = getItem(CART);
-
-  const handleClickRemoverItem = () => {
-    // const product = products.filter((e) => Number(e.id) === Number(value));
-    // product[0].quantity = 0;
-    // console.log(products);
-    // console.log(productsData);
-    // console.log(product);
-    // setItem(CART, );
-    console.log('hello');
+  const handleClickRemoverItem = ({ target: { value } }) => {
+    const filteredProducts = productsData.filter((e) => Number(e.id) !== Number(value));
+    setProducts(filteredProducts);
+    setRender(true);
   };
 
   return (
@@ -34,11 +36,12 @@ function Orders() {
           </tr>
         </thead>
         <tbody>
-          {productsData.map((item, index) => (
+          { productsData.map((item, index) => (
             <tr key={ item.name }>
               <td
-                data-testid={ `customer_checkout__element-
-                order-table-item-number-${index}` }
+                data-testid={
+                  `customer_checkout__element-order-table-item-number-${index}`
+                }
               >
                 {item.id}
               </td>
@@ -76,12 +79,13 @@ function Orders() {
                 </button>
               </td>
             </tr>
-          ))}
+          )) }
         </tbody>
       </table>
-      <h3 data-testid="customer_checkout__element-order-total-price">
-        TOTAL
-        {/* funcao para somar todos os produtos */}
+      <h3
+        data-testid="customer_checkout__element-order-total-price"
+      >
+        { getTotalPrice(productsData) }
       </h3>
     </div>
 

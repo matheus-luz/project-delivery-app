@@ -32,10 +32,9 @@ function Counter({ product }) {
       </button>
       <input
         className="text-center text-lg"
-        min={ 0 }
         data-testid={ `customer_products__input-card-quantity-${product.id} ` }
-        type="text"
         readOnly
+        type="text"
         value={ product.quantity }
       />
       <button

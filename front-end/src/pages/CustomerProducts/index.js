@@ -5,22 +5,15 @@ import Header from '../../components/Header';
 import HeaderButton from '../../components/Header/HeaderButton';
 import Button from '../../components/Library/Button';
 import { CartContext } from '../../context/cartContext';
+import { setProducts } from '../../utils/localStorage';
 
 function CustomerProducts() {
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
-  const CART = 'cart';
   const products = cart.filter((e) => e.quantity > 0);
 
-  if (!JSON.parse(localStorage.getItem(CART))) {
-    localStorage.setItem(CART, JSON.stringify([]));
-  }
-
-  const setProducts = (key, data) => localStorage
-    .setItem(key, JSON.stringify(data));
-
   const handleCartBtn = () => {
-    setProducts(CART, products);
+    setProducts(products);
     navigate('/customer/checkout');
   };
 

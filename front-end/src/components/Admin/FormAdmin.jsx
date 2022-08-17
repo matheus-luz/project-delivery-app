@@ -56,8 +56,6 @@ function FormAdmin({ getUsers }) {
     } catch (error) {
       console.log(error);
     }
-
-    console.log(form);
   };
 
   return (
