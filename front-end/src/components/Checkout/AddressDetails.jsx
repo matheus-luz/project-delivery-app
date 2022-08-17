@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../context/userContext';
 import Button from '../Library/Button';
 import getTotalPrice from '../../utils/totalPrice';
@@ -8,7 +8,7 @@ import { getProducts } from '../../utils/localStorage';
 
 function AddressDetails() {
   const { user } = useContext(userContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [address, setAdress] = useState('');
   const [number, setNumber] = useState('');
@@ -33,8 +33,8 @@ function AddressDetails() {
         },
       ),
     });
-    const data = await response.json();
-    console.log(data);
+    const { id } = await response.json();
+    navigate(`/customer/orders/${id}`);
     // Falta implementar o redirecionamente da rota e o trycatch do POST
   };
 
