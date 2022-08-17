@@ -1,16 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardList from '../../components/CardList';
 import Header from '../../components/Header';
 import HeaderButton from '../../components/Header/HeaderButton';
-import Button from '../../components/Library/Button';
 import { CartContext } from '../../context/cartContext';
 import { setProducts } from '../../utils/localStorage';
 
 function CustomerProducts() {
+  const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
   const products = cart.filter((e) => e.quantity > 0);
+
+  useEffect(() => {
+    setDisabled(products.length === 0);
+  }, [cart, products]);
 
   const handleCartBtn = () => {
     setProducts(products);
@@ -32,13 +36,20 @@ function CustomerProducts() {
         />
       </Header>
       <CardList />
-      <div className="absolute bottom-0 right-0 m-3">
-        <Button
+      <div className="fixed bottom-0 right-0 m-3">
+        <button
           onClick={ handleCartBtn }
-          testid="customer_products__button-cart"
+          data-testid="customer_products__button-cart"
+          disabled={ disabled }
+          type="button"
         >
-          Ver carrinho
-        </Button>
+          Ver carrinho: R$
+          <span data-testid="customer_products__checkout-bottom-value">
+            { products.reduce((acc, e) => acc + e.price * e.quantity, 0)
+              .toFixed(2)
+              .replace(/\./, ',') }
+          </span>
+        </button>
       </div>
     </div>
   );
