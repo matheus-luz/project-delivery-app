@@ -18,22 +18,21 @@ export default function OrderDetails({ userRole }) {
     })();
   }, []);
 
-  async function fetchData() {
-    fetch(`http://localhost:3001${location.pathname}`, {
-      method: 'GET',
-      headers: {
-        authorization: userData.token,
-      },
-    }).then((response) => response.json())
-      .then((data) => setOrder(data));
-  }
-
   useEffect(() => {
+    async function fetchData() {
+      fetch(`http://localhost:3001${location.pathname}`, {
+        method: 'GET',
+        headers: {
+          authorization: userData.token,
+        },
+      }).then((response) => response.json())
+        .then((data) => setOrder(data));
+    }
     if (renderOrder) {
       fetchData();
       setRenderOrder(false);
     }
-  }, [renderOrder]);
+  }, [location.pathname, renderOrder, userData.token]);
 
   const setAsDelivered = (id) => {
     fetch(`http://localhost:3001/customer/orders/update/${id}`, {
