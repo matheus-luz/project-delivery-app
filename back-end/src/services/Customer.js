@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, Sale, SaleProduct } = require('../database/models');
+const { Product, Sale, SaleProduct, User } = require('../database/models');
 const CustomError = require('../utils/customError');
 const config = require('../database/config/config');
 
@@ -40,9 +40,18 @@ const updateSaleStatus = async (id) => {
   await Sale.update({ status: 'Entregue' }, { where: { id } });
 };
 
+const getAllSellers = async () => {
+  const users = await User.findAll({
+    where: { role: 'seller' },
+    attributes: { exclude: ['role', 'email', 'password'] },
+  });
+  return users;
+};
+
 module.exports = {
   readProducts,
   createSale,
   updateSaleStatus,
+  getAllSellers,
   sequelize,
 };
