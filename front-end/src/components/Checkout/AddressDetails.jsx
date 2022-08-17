@@ -6,18 +6,18 @@ import getTotalPrice from '../../utils/totalPrice';
 import TextInput from '../Library/TextInput';
 import { getProducts } from '../../utils/localStorage';
 
-function AdressDetails() {
+function AddressDetails() {
   const { user } = useContext(userContext);
   // const navigate = useNavigate();
 
   const [address, setAdress] = useState('');
   const [number, setNumber] = useState('');
 
-  const productsData = getProducts();
-  const products = productsData.map(({ id, quantity }) => ({ productId: id, quantity }));
-
   const handleClick = async () => {
-    await fetch('/api/customer/checkout', {
+    const productsData = await getProducts();
+    const products = productsData
+      .map(({ id, quantity }) => ({ productId: id, quantity }));
+    const response = await fetch('/api/customer/checkout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,6 +33,8 @@ function AdressDetails() {
         },
       ),
     });
+    const data = await response.json();
+    console.log(data);
     // Falta implementar o redirecionamente da rota e o trycatch do POST
   };
 
@@ -82,4 +84,4 @@ function AdressDetails() {
   );
 }
 
-export default AdressDetails;
+export default AddressDetails;

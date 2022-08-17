@@ -1,5 +1,5 @@
 import React from 'react';
-import AdressDetails from '../../components/Checkout/AdressDetails';
+import AddressDetails from '../../components/Checkout/AddressDetails';
 import Orders from '../../components/Checkout/Orders';
 import Header from '../../components/Header';
 import HeaderButton from '../../components/Header/HeaderButton';
@@ -20,7 +20,7 @@ function Checkout() {
         />
       </Header>
       <Orders />
-      <AdressDetails />
+      <AddressDetails />
     </div>
   );
 }
