@@ -17,7 +17,6 @@ function CardProducts() {
         },
       });
       const json = await response.json();
-      console.log(json);
       setCart(json.map((product) => ({ ...product, quantity: 0 })));
     }
     if (user.token) fetchData();
