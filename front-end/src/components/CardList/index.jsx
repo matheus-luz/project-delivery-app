@@ -34,7 +34,10 @@ function CardProducts() {
   return (
     <div className="flex flex-wrap gap-3 m-3">
       {cart && cart.map((product) => (
-        <CardProduct key={ product.id } product={ product } />
+        <CardProduct
+          key={ product.id }
+          product={ product }
+        />
       ))}
     </div>
   );
