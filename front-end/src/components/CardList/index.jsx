@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { CartContext } from '../../context/cartContext';
 import { userContext } from '../../context/userContext';
+import { getProducts } from '../../utils/localStorage';
 import CardProduct from '../CardProduct';
 
 function CardProducts() {
@@ -9,6 +10,8 @@ function CardProducts() {
 
   useEffect(() => {
     async function fetchData() {
+      const localProducts = getProducts();
+
       const response = await fetch('/api/customer/products', {
         method: 'GET',
         headers: {
@@ -17,7 +20,13 @@ function CardProducts() {
         },
       });
       const json = await response.json();
-      setCart(json.map((product) => ({ ...product, quantity: 0 })));
+      const requestCart = json.map((product) => ({ ...product, quantity: 0 }));
+      // compare products from localProducts and request card and return new array with biggest quantity
+      const finalCart = requestCart.map((product) => {
+        const requestProduct = localProducts.find((item) => item.id === product.id);
+        return { ...product, quantity: requestProduct ? requestProduct.quantity : 0 };
+      });
+      setCart(finalCart);
     }
     if (user.token) fetchData();
   }, [user, setCart]);
