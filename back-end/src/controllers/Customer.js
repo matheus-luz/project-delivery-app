@@ -22,8 +22,15 @@ const updateSaleStatus = async (req, res) => {
   return res.status(200).json({ message: 'Updated' });
 };
 
+const getAllSellers = async (_req, res) => {
+  const users = await CustomerService.getAllSellers();
+
+  return res.status(200).json(users);
+};
+
 module.exports = {
   createSale,
   readProducts,
   updateSaleStatus,
+  getAllSellers,
 };
