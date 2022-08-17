@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Product, Sale, SaleProduct } = require('../database/models');
+const { Product, Sale, SaleProduct, User } = require('../database/models');
 const CustomError = require('../utils/customError');
 const config = require('../database/config/config');
 
@@ -16,7 +16,7 @@ const createSale = async (body, user) => {
     throw new CustomError(404, '"productIds" not found');
   }
 
-  await sequelize.transaction(async (t) => {
+  const id = await sequelize.transaction(async (t) => {
     const sale = await Sale.create({
       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber,
     }, { transaction: t });
@@ -26,7 +26,9 @@ const createSale = async (body, user) => {
     ));
 
     await SaleProduct.bulkCreate(saleProduct, { transaction: t });
+    return sale.id;
   });
+  return id;
 };
 
 const readProducts = async () => {
@@ -38,9 +40,18 @@ const updateSaleStatus = async (id) => {
   await Sale.update({ status: 'Entregue' }, { where: { id } });
 };
 
+const getAllSellers = async () => {
+  const users = await User.findAll({
+    where: { role: 'seller' },
+    attributes: { exclude: ['role', 'email', 'password'] },
+  });
+  return users;
+};
+
 module.exports = {
   readProducts,
   createSale,
   updateSaleStatus,
+  getAllSellers,
   sequelize,
 };

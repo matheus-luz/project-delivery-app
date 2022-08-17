@@ -4,9 +4,9 @@ const createSale = async (req, res) => {
   const { body } = req;
   const { user } = req;
 
-  await CustomerService.createSale(body, user);
+  const id = await CustomerService.createSale(body, user);
 
-  return res.status(201).json({ message: 'Sale successfully created' });
+  return res.status(201).json({ id });
 };
 
 const readProducts = async (_req, res) => {
@@ -22,8 +22,15 @@ const updateSaleStatus = async (req, res) => {
   return res.status(200).json({ message: 'Updated' });
 };
 
+const getAllSellers = async (_req, res) => {
+  const users = await CustomerService.getAllSellers();
+
+  return res.status(200).json(users);
+};
+
 module.exports = {
   createSale,
   readProducts,
   updateSaleStatus,
+  getAllSellers,
 };

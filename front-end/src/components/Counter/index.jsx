@@ -1,32 +1,28 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { CartContext } from '../../context/cartContext';
 
 function Counter({ product }) {
-  const [counter, setCounter] = useState(0);
   const { cart, setCart } = useContext(CartContext);
 
   const handleCounter = (operation) => {
+    const products = [...cart];
+    const i = products.findIndex((item) => item.id === product.id);
+
     if (operation === 'increment') {
-      setCounter((prev) => prev + 1);
-    } else {
-      setCounter((prev) => prev - 1);
+      products[i].quantity += 1;
+    } else if (products[i].quantity > 0) {
+      products[i].quantity -= 1;
     }
 
-    const newCart = cart.map((item) => {
-      if (item.id === product.id) {
-        return { ...item, quantity: counter };
-      }
-      return item;
-    });
-    setCart(newCart);
+    setCart(products);
   };
 
   return (
     <div>
       <button
         className="bg-trybe-primary text-lg px-2 text-white rounded-l-lg"
-        data-testid={ ` customer_products__button-card-rm-item-${product.id}` }
+        data-testid={ `customer_products__button-card-rm-item-${product.id}` }
         type="button"
         onClick={ (() => handleCounter('decrease')) }
       >
@@ -34,15 +30,14 @@ function Counter({ product }) {
       </button>
       <input
         className="text-center text-lg"
-        min={ 0 }
-        data-testid={ `customer_products__input-card-quantity-${product.id} ` }
-        type="text"
+        data-testid={ `customer_products__input-card-quantity-${product.id}` }
         readOnly
-        value={ counter }
+        type="text"
+        value={ product.quantity }
       />
       <button
         className="bg-trybe-primary text-lg px-2 text-white rounded-r-lg"
-        data-testid={ `customer_products__button-card-add-item-${product.id} ` }
+        data-testid={ `customer_products__button-card-add-item-${product.id}` }
         type="button"
         onClick={ (() => handleCounter('increment')) }
       >
@@ -55,6 +50,7 @@ function Counter({ product }) {
 Counter.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
   }).isRequired,
 };
 
