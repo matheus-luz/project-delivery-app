@@ -2,6 +2,7 @@ const { Product, Sale, User } = require('../database/models');
 const CustomError = require('../utils/customError');
 
 const formatOrders = (orders) => orders.map((order) => ({
+  id: order.id,
   user: order.user,
   seller: order.seller,
   order: {

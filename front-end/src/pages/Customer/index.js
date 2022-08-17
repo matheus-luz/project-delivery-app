@@ -9,7 +9,11 @@ export default function Seller() {
       <Header>
         <HeaderButton
           to=""
-          label="Pedidos"
+          label="Produtos"
+        />
+        <HeaderButton
+          to=""
+          label="Meus Pedidos"
         />
       </Header>
       <CardOrder />
