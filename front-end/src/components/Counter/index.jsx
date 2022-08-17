@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { CartContext } from '../../context/cartContext';
 
 function Counter({ product }) {
