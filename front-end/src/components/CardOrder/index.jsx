@@ -56,6 +56,7 @@ export default function CardOrders() {
       {
         orders.map((order) => (
           <button
+            data-testid={ `${route}_orders__element-order-${order.id}` }
             className="
             rounded-xl
             bg-slate-200
@@ -75,7 +76,6 @@ export default function CardOrders() {
               rounded-lg
               py-4
               justify-items-start"
-              data-testid={ `${route}_orders__element-order-${order.id}` }
             >
               Pedido 000
               {order.id}

@@ -9,7 +9,7 @@ function SellerDetails() {
         <HeaderButton
           to="/seller/orders"
           label="PEDIDOS"
-          testid="customer_products__element-navbar-link-products"
+          testid="customer_products__element-navbar-link-orders"
         />
       </Header>
       <OrderDetails userRole="seller" />
