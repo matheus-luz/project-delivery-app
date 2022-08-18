@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../context/userContext';
 import Button from '../Library/Button';
@@ -12,6 +12,27 @@ function AddressDetails() {
 
   const [address, setAdress] = useState('');
   const [number, setNumber] = useState('');
+  const [allSellers, setAllSellers] = useState([]);
+  const [seller, setSeller] = useState('');
+
+  const getSellers = useCallback(
+    async () => {
+      const data = await fetch('/api/customer/sellers', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: user.token,
+        },
+      }).then((response) => response.json());
+      setAllSellers(data);
+      setSeller(data[0].id);
+    },
+    [user.token],
+  );
+
+  useEffect(() => {
+    if (user.token) getSellers();
+  }, [user.token, getSellers]);
 
   const handleClick = async () => {
     const productsData = await getProducts();
@@ -25,7 +46,7 @@ function AddressDetails() {
       },
       body: JSON.stringify(
         {
-          sellerId: 2,
+          sellerId: seller,
           totalPrice: getTotalPrice(productsData),
           deliveryAddress: address,
           deliveryNumber: number,
@@ -35,23 +56,29 @@ function AddressDetails() {
     });
     const { id } = await response.json();
     navigate(`/customer/orders/${id}`);
-    // Falta implementar o redirecionamente da rota e o trycatch do POST
+    // Falta implementar o trycatch do POST
   };
 
   return (
     <div>
       <h3>Detalhes e Endereço para Entrega</h3>
 
-      <label htmlFor="responsavel">
+      <label htmlFor="responsible">
         P.Vendedora Responsável:
         <select
           data-testid="customer_checkout__select-seller"
-          id="responsavel"
-          name="estado"
+          id="responsible"
+          onChange={ (({ target: { value } }) => setSeller(value)) }
+          value={ seller }
         >
-          <option value="fulana1">fulana1</option>
-          <option value="fulana2">fulana2</option>
-          <option value="fulana3">fulana3</option>
+          { allSellers.map((e) => (
+            <option
+              key={ `seller-${e.id}` }
+              value={ e.id }
+            >
+              { e.name }
+            </option>
+          ))}
         </select>
       </label>
       <TextInput

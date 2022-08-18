@@ -52,30 +52,72 @@ export default function CardOrders() {
   };
 
   return (
-    <div>
+    <div className="flex justify-center">
       {
         orders.map((order) => (
           <button
+            className="
+            rounded-xl
+            bg-slate-200
+            p-8
+            mx-4
+            mt-12
+            "
             key={ order.id }
             type="button"
             onClick={ () => handleDetails(order.id) }
           >
-            <p data-testid={ `${route}_orders__element-order-${order.id}` }>
-              000
+            <p
+              className="flex
+              mb-7
+              bg-white
+              justify-center
+              rounded-lg
+              py-4
+              justify-items-start"
+              data-testid={ `${route}_orders__element-order-${order.id}` }
+            >
+              Pedido 000
               {order.id}
             </p>
-            <p data-testid={ `${route}_orders__element-delivery-status-${order.id}` }>
-              {order.order.satus}
+            <p
+              className="bg-blue-300
+              mb-4
+              rounded-lg
+              py-3
+              text-black"
+              data-testid={ `${route}_orders__element-delivery-status-${order.id}` }
+            >
+              { order.order.status }
             </p>
-            <p data-testid={ `${route}_orders__element-order-date-${order.id}` }>
+            <p
+              className="bg-white
+              rounded-lg
+              py-2
+              mb-4"
+              data-testid={ `${route}_orders__element-order-date-${order.id}` }
+            >
               {order.order.saleDate}
             </p>
-            <p data-testid={ `${route}_orders__element-card-price-${order.id}` }>
+            <p
+              className="bg-white
+            rounded-lg
+            py-2
+            mb-4"
+              data-testid={ `${route}_orders__element-card-price-${order.id}` }
+            >
               R$
+              {' '}
               {order.order.totalPrice}
 
             </p>
-            <p data-testid={ `${route}_orders__element-card-address-${order.id}` }>
+            <p
+              className="bg-slate-300
+              py-4
+              rounded-lg
+              p-4"
+              data-testid={ `${route}_orders__element-card-address-${order.id}` }
+            >
               {`${order.order.address}, ${order.order.adressNumber}`}
             </p>
           </button>
