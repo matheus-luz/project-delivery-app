@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import HeaderButton from '../../components/Header/HeaderButton';
 import CardOrder from '../../components/CardOrder';
 
-export default function Seller() {
+export default function Customer() {
   return (
     <div>
       <Header>

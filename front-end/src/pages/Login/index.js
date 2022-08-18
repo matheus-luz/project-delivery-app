@@ -22,6 +22,12 @@ function Login() {
     } else setCanLogin(false);
   }, [email, password]);
 
+  useEffect(() => {
+    if (getItem('user').role === 'customer') {
+      navigate('/customer/orders');
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch('api/login', {
@@ -38,16 +44,21 @@ function Login() {
     if (!response.ok) {
       setInvalidLogin(true);
     } else {
-      const user = await getItem('user');
       setInvalidLogin(false);
       const data = await response.json();
       setUser(data);
       if (data.role === 'customer') {
-        if (user.length) navigate('/customer/orders');
-        navigate('/customer/products');
-      } if (data.role === 'seller') {
+        if (getItem('user').name !== '') {
+          navigate('/customer/orders');
+        }
+        if (getItem('user').name === '') {
+          navigate('/customer/products');
+        }
+      }
+      if (data.role === 'seller') {
         navigate('/seller/orders');
-      } if (data.role === 'administrator') {
+      }
+      if (data.role === 'administrator') {
         navigate('/admin/manage');
       }
     }

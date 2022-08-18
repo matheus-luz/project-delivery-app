@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getItem } from '../../utils/localStorage';
 
 export default function CardOrders() {
   const [orders, setOrders] = useState([]);
-  const [userData, setUserData] = useState();
   const [renderOrders, setRenderOrders] = useState(false);
+  const [userData, setUserData] = useState();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,22 +22,18 @@ export default function CardOrders() {
   };
   route = getRoute();
 
-  const getItem = (key) => JSON.parse(localStorage.getItem(key)) || [];
-
   useEffect(() => {
-    (async () => {
-      const user = await getItem('user');
-      setUserData(user);
-      setRenderOrders(true);
-    })();
-  }, []);
+    setRenderOrders(true);
+  }, [userData]);
 
   useEffect(() => {
     async function fetchData() {
+      const user = getItem('user');
+      setUserData(user);
       const data = await fetch(URL, {
         method: 'GET',
         headers: {
-          authorization: userData.token,
+          authorization: user.token,
         },
       }).then((response) => response.json());
       setOrders(data);
@@ -56,6 +53,7 @@ export default function CardOrders() {
       {
         orders.map((order) => (
           <button
+            data-testid={ `${route}_orders__element-order-id-${order.id}` }
             className="
             rounded-xl
             bg-slate-200
@@ -75,7 +73,6 @@ export default function CardOrders() {
               rounded-lg
               py-4
               justify-items-start"
-              data-testid={ `${route}_orders__element-order-${order.id}` }
             >
               Pedido 000
               {order.id}
