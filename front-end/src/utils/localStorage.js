@@ -4,7 +4,7 @@ if (!JSON.parse(localStorage.getItem(CART))) {
   localStorage.setItem(CART, JSON.stringify([]));
 }
 
-const getItem = (key) => JSON.parse(localStorage
+export const getItem = (key) => JSON.parse(localStorage
   .getItem(key)) || [];
 
 const setItem = (key, data) => localStorage
