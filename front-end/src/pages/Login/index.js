@@ -18,7 +18,7 @@ function Login() {
   useEffect(() => {
     if (validateEmail(email) && password.length >= passwordLenght) {
       setCanLogin(true);
-    }
+    } else setCanLogin(false);
   }, [email, password]);
 
   const handleSubmit = async (e) => {
