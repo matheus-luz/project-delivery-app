@@ -47,14 +47,18 @@ function Login() {
       setInvalidLogin(false);
       const data = await response.json();
       setUser(data);
-      if (getItem('user').name !== '') {
-        navigate('/customer/orders');
+      if (data.role === 'customer') {
+        if (getItem('user').name !== '') {
+          navigate('/customer/orders');
+        }
+        if (getItem('user').name === '') {
+          navigate('/customer/products');
+        }
       }
-      if (getItem('user').name === '') {
-        navigate('/customer/products');
-      } if (data.role === 'seller') {
+      if (data.role === 'seller') {
         navigate('/seller/orders');
-      } if (data.role === 'administrator') {
+      }
+      if (data.role === 'administrator') {
         navigate('/admin/manage');
       }
     }

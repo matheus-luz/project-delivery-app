@@ -8,8 +8,8 @@ export default function Seller() {
     <div>
       <Header>
         <HeaderButton
-          to=""
-          label="Pedidos"
+          to="/seller/orders"
+          label="PEDIDOS"
           testid="customer_products__element-navbar-link-orders"
         />
       </Header>

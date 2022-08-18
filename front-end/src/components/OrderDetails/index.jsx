@@ -21,29 +21,32 @@ export default function OrderDetails({ userRole }) {
     })();
   }, []);
 
+  function fetchData() {
+    fetch(`http://localhost:3001${location.pathname}`, {
+      method: 'GET',
+      headers: {
+        authorization: userData.token,
+      },
+    }).then((response) => response.json())
+      .then((data) => {
+        setOrder(data);
+        if (data.status === 'Pendente') setIsAbleToPrepare(false);
+        else setIsAbleToPrepare(true);
+
+        if (data.status === 'Preparando') setIsAbleToDeliver(false);
+        else setIsAbleToDeliver(true);
+
+        if (data.status === 'Em Trânsito') setIsDelivered(false);
+        else setIsDelivered(true);
+      });
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      fetch(`http://localhost:3001${location.pathname}`, {
-        method: 'GET',
-        headers: {
-          authorization: userData.token,
-        },
-      }).then((response) => response.json())
-        .then((data) => {
-          setOrder(data);
-          if (data.status === 'Pendente') setIsAbleToPrepare(false);
-          else setIsAbleToPrepare(true);
-          if (data.status === 'Preparando') setIsAbleToDeliver(false);
-          else setIsAbleToDeliver(true);
-          if (data.status === 'Em Trânsito') setIsDelivered(false);
-          else setIsDelivered(true);
-        });
-    }
     if (renderOrder) {
       fetchData();
       setRenderOrder(false);
     }
-  }, [location, renderOrder, userData]);
+  }, [renderOrder]);
 
   const setAsDelivered = (id) => {
     fetch(`http://localhost:3001/customer/orders/update/${id}`, {

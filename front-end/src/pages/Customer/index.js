@@ -9,11 +9,13 @@ export default function Customer() {
       <Header>
         <HeaderButton
           to="/customer/products"
-          label="Produtos"
+          label="PRODUTOS"
+          testid="customer_products__element-navbar-link-products"
         />
         <HeaderButton
-          to=""
-          label="Meus Pedidos"
+          to="/customer/orders"
+          label="MEUS PEDIDOS"
+          testid="customer_products__element-navbar-link-orders"
         />
       </Header>
       <CardOrder />
