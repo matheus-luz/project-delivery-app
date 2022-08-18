@@ -12,7 +12,7 @@ export default function Seller() {
           label="Produtos"
         />
         <HeaderButton
-          to=""
+          to="/customer/orders"
           label="Meus Pedidos"
         />
       </Header>
