@@ -8,7 +8,7 @@ export default function Seller() {
     <div>
       <Header>
         <HeaderButton
-          to=""
+          to="/customer/products"
           label="Produtos"
         />
         <HeaderButton
