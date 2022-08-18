@@ -56,7 +56,7 @@ export default function CardOrders() {
       {
         orders.map((order) => (
           <button
-            data-testid={ `${route}_orders__element-order-${order.id}` }
+            data-testid={ `${route}_orders__element-order-id-${order.id}` }
             className="
             rounded-xl
             bg-slate-200
