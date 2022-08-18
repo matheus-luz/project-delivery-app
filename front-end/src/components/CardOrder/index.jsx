@@ -59,7 +59,7 @@ export default function CardOrders() {
             className="
             rounded-xl
             bg-slate-200
-            p-16
+            p-8
             mx-4
             mt-12
             "
@@ -73,7 +73,7 @@ export default function CardOrders() {
               bg-white
               justify-center
               rounded-lg
-              py-6
+              py-4
               justify-items-start"
               data-testid={ `${route}_orders__element-order-${order.id}` }
             >
@@ -81,11 +81,11 @@ export default function CardOrders() {
               {order.id}
             </p>
             <p
-              className="bg-gray-700
+              className="bg-blue-300
               mb-4
               rounded-lg
               py-3
-              text-white"
+              text-black"
               data-testid={ `${route}_orders__element-delivery-status-${order.id}` }
             >
               { order.order.status }
