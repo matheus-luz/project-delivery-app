@@ -22,6 +22,12 @@ function Login() {
     } else setCanLogin(false);
   }, [email, password]);
 
+  useEffect(() => {
+    if (getItem('user').role === 'customer') {
+      navigate('/customer/orders');
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch('api/login', {
