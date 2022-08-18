@@ -4,6 +4,7 @@ import Button from '../../components/Library/Button';
 import TextInput from '../../components/Library/TextInput';
 import { userContext } from '../../context/userContext';
 import validateEmail from '../../utils/emailValidator';
+import { getItem } from '../../utils/localStorage';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -40,7 +41,10 @@ function Login() {
       setInvalidLogin(false);
       const data = await response.json();
       setUser(data);
-      if (data.role === 'customer') {
+      if (getItem('user').name !== '') {
+        navigate('/customer/orders');
+      }
+      if (getItem('user').name === '') {
         navigate('/customer/products');
       } if (data.role === 'seller') {
         navigate('/seller/orders');
