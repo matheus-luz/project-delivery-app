@@ -6,6 +6,9 @@ export default function OrderDetails({ userRole }) {
   const [order, setOrder] = useState({ seller: {}, products: [{ salesProducts: {} }] });
   const [userData, setUserData] = useState();
   const [renderOrder, setRenderOrder] = useState(false);
+  const [isAbleToPrepare, setIsAbleToPrepare] = useState(true);
+  const [isAbleToDeliver, setIsAbleToDeliver] = useState(true);
+  const [isDelivered, setIsDelivered] = useState(true);
   const location = useLocation();
 
   const getItem = (key) => JSON.parse(localStorage.getItem(key)) || [];
@@ -26,13 +29,21 @@ export default function OrderDetails({ userRole }) {
           authorization: userData.token,
         },
       }).then((response) => response.json())
-        .then((data) => setOrder(data));
+        .then((data) => {
+          setOrder(data);
+          if (data.status === 'Pendente') setIsAbleToPrepare(false);
+          else setIsAbleToPrepare(true);
+          if (data.status === 'Preparando') setIsAbleToDeliver(false);
+          else setIsAbleToDeliver(true);
+          if (data.status === 'Em Trânsito') setIsDelivered(false);
+          else setIsDelivered(true);
+        });
     }
     if (renderOrder) {
       fetchData();
       setRenderOrder(false);
     }
-  }, [location.pathname, renderOrder, userData.token]);
+  }, [location, renderOrder, userData]);
 
   const setAsDelivered = (id) => {
     fetch(`http://localhost:3001/customer/orders/update/${id}`, {
@@ -91,8 +102,9 @@ export default function OrderDetails({ userRole }) {
           onClick={ () => setAsDelivered(order.id) }
           type="button"
           data-testid="customer_order_details__button-delivery-check"
+          disabled={ isDelivered }
         >
-          Marcar como entregue
+          MARCAR COMO ENTREGUE
         </button>)
         : (
           <div>
@@ -100,6 +112,7 @@ export default function OrderDetails({ userRole }) {
               onClick={ () => updateStatus(order.id, 'Preparando') }
               type="button"
               data-testid="seller_order_details__button-preparing-check"
+              disabled={ isAbleToPrepare }
             >
               PREPARAR PEDIDO
             </button>
@@ -107,6 +120,7 @@ export default function OrderDetails({ userRole }) {
               onClick={ () => updateStatus(order.id, 'Em Trânsito') }
               type="button"
               data-testid="seller_order_details__button-dispatch-check"
+              disabled={ isAbleToDeliver }
             >
               SAIU PARA ENTREGA
             </button>
@@ -168,7 +182,7 @@ export default function OrderDetails({ userRole }) {
       <p data-testid={ `${userRole}_order_details__element-order-total-price` }>
         TOTAL:
         {' '}
-        {order.totalPrice}
+        {order.totalPrice?.replace(/\./, ',')}
       </p>
     </div>
   );
