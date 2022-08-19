@@ -15,8 +15,7 @@ function TextInput(props) {
         ring-trybe-primary-dark 
         ring-1 
         ring-inset 
-        rounded 
-        selection:shadow-md` }
+        rounded` }
       />
     </div>
   );

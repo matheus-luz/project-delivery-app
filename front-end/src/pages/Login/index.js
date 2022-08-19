@@ -4,6 +4,7 @@ import Button from '../../components/Library/Button';
 import TextInput from '../../components/Library/TextInput';
 import { userContext } from '../../context/userContext';
 import validateEmail from '../../utils/emailValidator';
+import { getItem } from '../../utils/localStorage';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -18,8 +19,14 @@ function Login() {
   useEffect(() => {
     if (validateEmail(email) && password.length >= passwordLenght) {
       setCanLogin(true);
-    }
+    } else setCanLogin(false);
   }, [email, password]);
+
+  useEffect(() => {
+    if (getItem('user').role === 'customer') {
+      navigate('/customer/orders');
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,10 +48,17 @@ function Login() {
       const data = await response.json();
       setUser(data);
       if (data.role === 'customer') {
-        navigate('/customer/products');
-      } if (data.role === 'seller') {
+        if (getItem('user').name !== '') {
+          navigate('/customer/orders');
+        }
+        if (getItem('user').name === '') {
+          navigate('/customer/products');
+        }
+      }
+      if (data.role === 'seller') {
         navigate('/seller/orders');
-      } if (data.role === 'administrator') {
+      }
+      if (data.role === 'administrator') {
         navigate('/admin/manage');
       }
     }
@@ -57,7 +71,6 @@ function Login() {
   return (
     <div className="flex items-center justify-center h-screen w-screen">
       <div>
-        <div>Imagem</div>
         <h1 className="text-3xl text-center my-3">DELIVERY APP</h1>
         <form
           onSubmit={ handleSubmit }

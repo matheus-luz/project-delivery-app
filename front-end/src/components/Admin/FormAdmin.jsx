@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { useEffect, useContext, useState } from 'react';
 import { userContext } from '../../context/userContext';
 import validateEmail from '../../utils/emailValidator';
+import Button from '../Library/Button';
+import Select from '../Library/Select';
 import TextInput from '../Library/TextInput';
 
 function FormAdmin({ getUsers }) {
@@ -59,7 +61,7 @@ function FormAdmin({ getUsers }) {
   };
 
   return (
-    <div>
+    <div className="p-3">
       {exist && (
         <div
           className="alert alert-danger"
@@ -69,8 +71,19 @@ function FormAdmin({ getUsers }) {
           Usuário já existe
         </div>
       )}
-
-      <form style={ { display: 'flex' } } onSubmit={ onSubmit }>
+      <h1 className="text-2xl">Cadastrar novo usuário</h1>
+      <form
+        className={ `flex gap-3 
+        p-3
+        justify-center 
+        items-center 
+        ring-gray-300
+        ring-1
+        shadow-md
+        ring-inset ` }
+        style={ { display: 'flex' } }
+        onSubmit={ onSubmit }
+      >
         <TextInput
           data-testid="admin_manage__input-name"
           id="admin_manage__input-name"
@@ -101,24 +114,25 @@ function FormAdmin({ getUsers }) {
           type="password"
           value={ form.password }
         />
-        <select
+        <Select
           data-testid="admin_manage__select-role"
+          id="select-role"
+          label="Tipo"
           name="role"
           onChange={ (e) => { setForm({ ...form, role: e.target.value }); } }
-          style={ { border: '2px solid black' } }
           value={ form.role }
         >
           <option value="seller">Vendedor</option>
           <option value="customer">Cliente</option>
-        </select>
-        <button
-          data-testid="admin_manage__button-register"
+        </Select>
+        <Button
+          testid="admin_manage__button-register"
           disabled={ disabled }
           style={ { border: '1px solid black' } }
           type="submit"
         >
           Cadastrar
-        </button>
+        </Button>
       </form>
     </div>
   );

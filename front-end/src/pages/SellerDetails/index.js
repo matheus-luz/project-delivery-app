@@ -1,11 +1,10 @@
-import React from 'react';
 import Header from '../../components/Header';
 import HeaderButton from '../../components/Header/HeaderButton';
-import CardOrder from '../../components/CardOrder';
+import OrderDetails from '../../components/OrderDetails';
 
-export default function Seller() {
+function SellerDetails() {
   return (
-    <div>
+    <>
       <Header>
         <HeaderButton
           to="/seller/orders"
@@ -13,7 +12,9 @@ export default function Seller() {
           testid="customer_products__element-navbar-link-orders"
         />
       </Header>
-      <CardOrder />
-    </div>
+      <OrderDetails userRole="seller" />
+    </>
   );
 }
+
+export default SellerDetails;

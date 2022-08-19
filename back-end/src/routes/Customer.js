@@ -5,6 +5,7 @@ const OrderController = require('../controllers/Order');
 const authToken = require('../middlewares/authToken');
 const validateSale = require('../middlewares/validateSale');
 
+router.get('/sellers', authToken, rescue(CustomerController.getAllSellers));
 router.get('/products', authToken, rescue(CustomerController.readProducts));
 router.get('/orders', authToken, rescue(OrderController.readOrders));
 router.get('/orders/:id', authToken, rescue(OrderController.readOrderbyId));
