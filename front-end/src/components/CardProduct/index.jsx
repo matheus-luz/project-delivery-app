@@ -9,19 +9,23 @@ function CardProduct({ product }) {
         ring-1 
         ring-inset 
         shadow-md
+        flex
+        flex-col
+        justify-center
+        items-center
         relative` }
       data-testid={ `customer_products__element-card-price-${product.id}` }
       key={ product.id }
     >
 
       <p
-        className="text-center absolute top-0 left-0 text-xl font-bold p-2"
+        className="text-center absolute top-0 left-0 text-xl font-bold p-2 drop-shadow-sm"
         data-testid={ `customer_products__element-card-price-${product.id}` }
       >
         { product.price.replace(/\./, ',') }
       </p>
       <img
-        className="w-full p-2"
+        className="object-contain h-52 p-2 object-center"
         data-testid={ `customer_products__img-card-bg-image-${product.id}` }
         src={ product.urlImage }
         alt={ product.name }
