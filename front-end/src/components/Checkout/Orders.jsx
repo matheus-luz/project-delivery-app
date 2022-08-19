@@ -1,8 +1,27 @@
-import React from 'react';
-import productsMock from '../../helpers/productsMock';
+import React, { useEffect, useState } from 'react';
+import { getProducts, setProducts } from '../../utils/localStorage';
+import getTotalPrice from '../../utils/totalPrice';
+import './finalizingOrder.css';
 
-function FinalizarPedido() {
-  const productsData = productsMock; // precisa pegar dadose colocar no lugar do mock
+function Orders() {
+  const [productsData, setProductsData] = useState([]);
+  const [render, setRender] = useState([]);
+
+  useEffect(() => {
+    const retrieveProducts = async () => {
+      const products = await getProducts();
+      setProductsData(products);
+      setRender(false);
+    };
+    if (render) retrieveProducts();
+  }, [render]);
+
+  const handleClickRemoverItem = ({ target: { value } }) => {
+    const filteredProducts = productsData.filter((e) => Number(e.id) !== Number(value));
+    setProducts(filteredProducts);
+    setRender(true);
+  };
+
   return (
     <div className="tabela">
       <table border="1" cellPadding="20px">
@@ -17,11 +36,12 @@ function FinalizarPedido() {
           </tr>
         </thead>
         <tbody>
-          {productsData.map((item, index) => (
+          { productsData.map((item, index) => (
             <tr key={ item.name }>
               <td
-                data-testid={ `customer_checkout__element-
-                order-table-item-number-${index}` }
+                data-testid={
+                  `customer_checkout__element-order-table-item-number-${index}`
+                }
               >
                 {item.id}
               </td>
@@ -45,30 +65,31 @@ function FinalizarPedido() {
                 data-testid={ `customer_checkout__element-order
                 -table-sub-total-${index}` }
               >
-                {item.price * item.quantity}
-                {/* funcao para somar preços de produtos individuais */}
+                {(item.price * item.quantity).toFixed(2)}
               </td>
               <td
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
               >
                 <button
+                  onClick={ handleClickRemoverItem }
                   type="button"
-                // onClick={ () => handleClickRemoverItem() } funcao para remover o item
+                  value={ item.id }
                 >
                   Remover
                 </button>
               </td>
             </tr>
-          ))}
+          )) }
         </tbody>
       </table>
-      <h3 data-testid="customer_checkout__element-order-total-price">
-        TOTAL
-        {/* funcao para somar todos os produtos */}
+      <h3
+        data-testid="customer_checkout__element-order-total-price"
+      >
+        { getTotalPrice(productsData) }
       </h3>
     </div>
 
   );
 }
 
-export default FinalizarPedido;
+export default Orders;

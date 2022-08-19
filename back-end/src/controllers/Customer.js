@@ -4,9 +4,9 @@ const createSale = async (req, res) => {
   const { body } = req;
   const { user } = req;
 
-  await CustomerService.createSale(body, user);
+  const id = await CustomerService.createSale(body, user);
 
-  return res.status(201).json({ message: 'Sale successfully created' });
+  return res.status(201).json({ id });
 };
 
 const readProducts = async (_req, res) => {

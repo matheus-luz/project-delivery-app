@@ -22,7 +22,7 @@ function CardProduct({ product }) {
         className="text-center absolute top-0 left-0 text-xl font-bold p-2 drop-shadow-sm"
         data-testid={ `customer_products__element-card-price-${product.id}` }
       >
-        { product.price }
+        { product.price.replace(/\./, ',') }
       </p>
       <img
         className="object-contain h-52 p-2 object-center"
@@ -38,7 +38,9 @@ function CardProduct({ product }) {
           {product.name}
         </p>
 
-        <Counter product={ product } />
+        <Counter
+          product={ product }
+        />
       </div>
     </div>
   );

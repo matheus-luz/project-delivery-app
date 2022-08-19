@@ -16,7 +16,7 @@ const createSale = async (body, user) => {
     throw new CustomError(404, '"productIds" not found');
   }
 
-  await sequelize.transaction(async (t) => {
+  const id = await sequelize.transaction(async (t) => {
     const sale = await Sale.create({
       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber,
     }, { transaction: t });
@@ -26,7 +26,9 @@ const createSale = async (body, user) => {
     ));
 
     await SaleProduct.bulkCreate(saleProduct, { transaction: t });
+    return sale.id;
   });
+  return id;
 };
 
 const readProducts = async () => {

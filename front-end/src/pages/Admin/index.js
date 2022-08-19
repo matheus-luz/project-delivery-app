@@ -21,7 +21,6 @@ function Admin() {
       });
       const data = await response.json();
       setUsers(data);
-      console.log('getusers');
     },
     [user.token],
   );

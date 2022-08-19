@@ -7,12 +7,12 @@ function Counter({ product }) {
 
   const handleCounter = (operation) => {
     const products = [...cart];
-    const index = products.findIndex((item) => item.id === product.id);
+    const i = products.findIndex((item) => item.id === product.id);
 
     if (operation === 'increment') {
-      products[index].quantity += 1;
-    } else {
-      products[index].quantity -= 1;
+      products[i].quantity += 1;
+    } else if (products[i].quantity > 0) {
+      products[i].quantity -= 1;
     }
 
     setCart(products);
@@ -22,7 +22,7 @@ function Counter({ product }) {
     <div>
       <button
         className="bg-trybe-primary text-lg px-2 text-white rounded-l-lg"
-        data-testid={ ` customer_products__button-card-rm-item-${product.id}` }
+        data-testid={ `customer_products__button-card-rm-item-${product.id}` }
         type="button"
         onClick={ (() => handleCounter('decrease')) }
       >
@@ -30,15 +30,14 @@ function Counter({ product }) {
       </button>
       <input
         className="text-center text-lg"
-        min={ 0 }
-        data-testid={ `customer_products__input-card-quantity-${product.id} ` }
-        type="text"
+        data-testid={ `customer_products__input-card-quantity-${product.id}` }
         readOnly
+        type="text"
         value={ product.quantity }
       />
       <button
         className="bg-trybe-primary text-lg px-2 text-white rounded-r-lg"
-        data-testid={ `customer_products__button-card-add-item-${product.id} ` }
+        data-testid={ `customer_products__button-card-add-item-${product.id}` }
         type="button"
         onClick={ (() => handleCounter('increment')) }
       >

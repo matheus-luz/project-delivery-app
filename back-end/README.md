@@ -5,9 +5,9 @@ Essa API possui os endpoints abaixo:
 
 |  | Método | Descrição |
 |---|---|---|
-| 01 | `POST - http://http://localhost:3001/admin` | Cria um novo usuário (`customer` ou `seller`). |
-| 02 | `GET - http://http://localhost:3001/admin` | Busca todos os usuários (exceto `administrator`). |
-| 03 | `DELETE - http://http://localhost:3001/admin` | Deleta um usuário. |
+| 01 | `POST - http://localhost:3001/admin` | Cria um novo usuário (`customer` ou `seller`). |
+| 02 | `GET - http://localhost:3001/admin` | Busca todos os usuários (exceto `administrator`). |
+| 03 | `DELETE - http://localhost:3001/admin` | Deleta um usuário. |
 | 04 | `POST - http://localhost:3001/customer/checkout` | Cria um novo pedido. |  
 | 05 | `GET - http://localhost:3001/customer/products` | Busca todos os produtos. |
 | 06 | `GET - http://localhost:3001/customer/orders` | Busca todos os pedidos do cliente. |
