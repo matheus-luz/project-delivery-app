@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getProducts, setProducts } from '../../utils/localStorage';
 import getTotalPrice from '../../utils/totalPrice';
-import './finalizingOrder.css';
 
 function Orders() {
   const [productsData, setProductsData] = useState([]);
@@ -23,22 +22,36 @@ function Orders() {
   };
 
   return (
-    <div className="tabela">
-      <table border="1" cellPadding="20px">
+    <div className="p-3 border border-1 border-gray-300 shadow-md flex flex-col">
+      <table
+        className={ `border 
+        border-none 
+        table-auto
+        gap-3
+        border-separate 
+        border-spacing-y-1` }
+      >
         <thead>
-          <tr>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-            <th>Remover Item</th>
+          <tr className="text-sm text-gray-700">
+            <th className="font-normal">Item</th>
+            <th className="font-normal">Descrição</th>
+            <th className="font-normal">Quantidade</th>
+            <th className="font-normal">Valor Unitário</th>
+            <th className="font-normal">Sub-total</th>
+            <th className="font-normal">Remover Item</th>
           </tr>
         </thead>
         <tbody>
           { productsData.map((item, index) => (
             <tr key={ item.name }>
               <td
+                className={ `bg-trybe-primary-light 
+                px-2 
+                text-center 
+                rounded-l-md
+                text-lg
+                font-bold
+                text-trybe-primary-dark` }
                 data-testid={
                   `customer_checkout__element-order-table-item-number-${index}`
                 }
@@ -46,16 +59,32 @@ function Orders() {
                 {index + 1}
               </td>
               <td
+                className={ `bg-gray-100
+                font-bold
+                text-trybe-primary-dark
+                px-2
+                pr-20` }
                 data-testid={ `customer_checkout__element-order-table-name-${index}` }
               >
                 {item.name}
               </td>
               <td
+                className={ `bg-trybe-primary
+                text-center
+                px-2
+                  text-medium
+                  text-white
+                ` }
                 data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
               >
                 {item.quantity}
               </td>
               <td
+                className={ `bg-trybe-purple
+                px-10
+                text-medium
+                text-white
+              ` }
                 data-testid={
                   `customer_checkout__element-order-table-unit-price-${index}`
                 }
@@ -63,6 +92,10 @@ function Orders() {
                 {item.price.replace(/\./, ',')}
               </td>
               <td
+                className={ `bg-trybe-blue
+                px-10
+                text-medium
+                text-white` }
                 data-testid={
                   `customer_checkout__element-order-table-sub-total-${index}`
                 }
@@ -70,6 +103,7 @@ function Orders() {
                 {(item.price * item.quantity).toFixed(2).replace(/\./, ',')}
               </td>
               <td
+                className="bg-trybe-primary-light px-2 py-1 text-white rounded-r-md"
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
               >
                 <button
@@ -85,9 +119,23 @@ function Orders() {
         </tbody>
       </table>
       <h3
-        data-testid="customer_checkout__element-order-total-price"
+        className={ `self-end 
+        bg-trybe-primary 
+        text-end 
+        text-white 
+        text-xl
+        font-bold
+        py-1 
+        px-2
+        mt-5
+        rounded-lg` }
       >
-        { getTotalPrice(productsData).replace(/\./, ',') }
+        Total: R$
+        <span
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          { getTotalPrice(productsData).replace(/\./, ',') }
+        </span>
       </h3>
     </div>
 

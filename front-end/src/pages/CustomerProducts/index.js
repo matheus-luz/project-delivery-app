@@ -38,6 +38,14 @@ function CustomerProducts() {
       <CardList />
       <div className="fixed bottom-0 right-0 m-3">
         <button
+          className={ `tracking-wide 
+          bg-trybe-primary 
+          text-white 
+          hover:bg-trybe-primary-dark 
+          disabled:bg-slate-400
+          uppercase
+          text-lg
+          py-2 px-4 rounded-lg` }
           onClick={ handleCartBtn }
           data-testid="customer_products__button-cart"
           disabled={ disabled }

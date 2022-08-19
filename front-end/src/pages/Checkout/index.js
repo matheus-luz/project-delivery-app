@@ -19,8 +19,17 @@ function Checkout() {
           label="Meus pedidos"
         />
       </Header>
-      <Orders />
-      <AddressDetails />
+      <div
+        className="flex flex-col items-center justify-center"
+      >
+        <div className="mt-5">
+          <h1 className="font-bold text-xl text-trybe-primary-dark">
+            Finalizar pedido
+          </h1>
+          <Orders />
+        </div>
+        <AddressDetails />
+      </div>
     </div>
   );
 }

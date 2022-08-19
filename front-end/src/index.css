@@ -1,3 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@tailwind base ;
+
+@tailwind components ;
+
+@tailwind utilities ;
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+
+  /* display: none; <- Crashes Chrome on hover */
+  appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}

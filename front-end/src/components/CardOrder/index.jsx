@@ -1,36 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { getItem } from '../../utils/localStorage';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { userContext } from '../../context/userContext';
 
 export default function CardOrders() {
   const [orders, setOrders] = useState([]);
-  const [renderOrders, setRenderOrders] = useState(false);
-  const [userData, setUserData] = useState();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const URL = `http://localhost:3001${location.pathname}`;
-  let route;
-
-  const getRoute = () => {
-    if (URL.includes('seller')) {
-      route = 'seller';
-    } if (URL.includes('customer')) {
-      route = 'customer';
-    }
-    return route;
-  };
-  route = getRoute();
-
-  useEffect(() => {
-    setRenderOrders(true);
-  }, [userData]);
+  const { user } = useContext(userContext);
+  const PADDING = 4;
 
   useEffect(() => {
     async function fetchData() {
-      const user = getItem('user');
-      setUserData(user);
-      const data = await fetch(URL, {
+      const data = await fetch(`/api/${user.role}/orders`, {
         method: 'GET',
         headers: {
           authorization: user.token,
@@ -38,85 +18,93 @@ export default function CardOrders() {
       }).then((response) => response.json());
       setOrders(data);
     }
-    if (renderOrders) {
-      fetchData();
-      setRenderOrders(false);
-    }
-  }, [renderOrders, userData, orders, URL]);
+    if (user.role) fetchData();
+  }, [orders, user.role, user.token]);
 
   const handleDetails = (id) => {
     navigate(`${id}`);
   };
 
-  return (
-    <div className="flex justify-center">
-      {
-        orders.map((order) => (
-          <button
-            data-testid={ `${route}_orders__element-order-id-${order.id}` }
-            className="
-            rounded-xl
-            bg-slate-200
-            p-8
-            mx-4
-            mt-12
-            "
-            key={ order.id }
-            type="button"
-            onClick={ () => handleDetails(order.id) }
-          >
-            <p
-              className="flex
-              mb-7
-              bg-white
-              justify-center
-              rounded-lg
-              py-4
-              justify-items-start"
-            >
-              Pedido 000
-              {order.id}
-            </p>
-            <p
-              className="bg-blue-300
-              mb-4
-              rounded-lg
-              py-3
-              text-black"
-              data-testid={ `${route}_orders__element-delivery-status-${order.id}` }
-            >
-              { order.order.status }
-            </p>
-            <p
-              className="bg-white
-              rounded-lg
-              py-2
-              mb-4"
-              data-testid={ `${route}_orders__element-order-date-${order.id}` }
-            >
-              {order.order.saleDate}
-            </p>
-            <p
-              className="bg-white
-            rounded-lg
-            py-2
-            mb-4"
-              data-testid={ `${route}_orders__element-card-price-${order.id}` }
-            >
-              R$
-              {' '}
-              {order.order.totalPrice}
+  const getOrderColor = (status) => {
+    switch (status) {
+    case 'Entregue':
+      return 'bg-[#3bd5b0]';
+    case 'Pendente':
+      return 'bg-[#d4c63c]';
+    default:
+      return 'bg-[#87d53c]';
+    }
+  };
 
+  return (
+    <div className="flex m-10 gap-3">
+      {
+        orders.map((item) => (
+          <button
+            className={ `border 
+            border-1 
+            border-gray-300 
+            shadow-md 
+            flex 
+            p-2
+            flex-row
+            gap-3
+            items-center
+            justify-center` }
+            data-testid={ `${user.role}_orders__element-order-id-${item.id}` }
+            key={ item.id }
+            type="button"
+            onClick={ () => handleDetails(item.id) }
+          >
+            <p className="flex flex-col text-sm p-4">
+              Pedido
+              <span className="text-xl">
+                {item.id.toString().padStart(PADDING, '0')}
+              </span>
             </p>
             <p
-              className="bg-slate-300
-              py-4
-              rounded-lg
-              p-4"
-              data-testid={ `${route}_orders__element-card-address-${order.id}` }
+              className={
+                `${getOrderColor(item.order.status)} 
+                h-full 
+                font-bold 
+                text-center 
+                text-xl 
+                rounded-md
+                flex
+                items-center
+                justify-center
+                px-2`
+              }
+              data-testid={ `${user.role}_orders__element-delivery-status-${item.id}` }
             >
-              {`${order.order.address}, ${order.order.adressNumber}`}
+              { item.order.status }
             </p>
+            <div className="flex flex-col gap-3">
+              <p
+                className="bg-gray-100 text-sm p-2 rounded-md"
+                data-testid={ `${user.role}_orders__element-order-date-${item.id}` }
+              >
+                {item.order.saleDate}
+              </p>
+              <p
+                className="bg-gray-100 text-sm p-2 rounded-md"
+                data-testid={ `${user.role}_orders__element-card-price-${item.id}` }
+              >
+                R$
+                {' '}
+                {item.order.totalPrice}
+
+              </p>
+            </div>
+            {
+              user.role !== 'customer' && (
+                <p
+                  data-testid={ `${user.role}_orders__element-card-address-${item.id}` }
+                >
+                  {`${item.order.address}, ${item.order.adressNumber}`}
+                </p>
+              )
+            }
           </button>
         ))
       }

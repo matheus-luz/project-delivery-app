@@ -5,6 +5,7 @@ import Button from '../Library/Button';
 import getTotalPrice from '../../utils/totalPrice';
 import TextInput from '../Library/TextInput';
 import { getProducts } from '../../utils/localStorage';
+import Select from '../Library/Select';
 
 function AddressDetails() {
   const { user } = useContext(userContext);
@@ -60,53 +61,54 @@ function AddressDetails() {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h3>Detalhes e Endereço para Entrega</h3>
 
-      <label htmlFor="responsible">
-        P.Vendedora Responsável:
-        <select
-          data-testid="customer_checkout__select-seller"
-          id="responsible"
-          onChange={ (({ target: { value } }) => setSeller(value)) }
-          value={ seller }
+      <div className="flex flex-col p-3 gap-3 border border-1 border-gray-300 shadow-md">
+        <div className="flex flex-row gap-3">
+          <Select
+            label="P.Vendedora Responsável:"
+            data-testid="customer_checkout__select-seller"
+            id="responsible"
+            onChange={ (({ target: { value } }) => setSeller(value)) }
+            value={ seller }
+          >
+            { allSellers.map((e) => (
+              <option
+                key={ `seller-${e.id}` }
+                value={ e.id }
+              >
+                { e.name }
+              </option>
+            ))}
+          </Select>
+          <TextInput
+            placeholder="Digite o endereço"
+            data-testid="customer_checkout__input-address"
+            type="text"
+            id="user-name"
+            label="Endereço"
+            value={ address }
+            onChange={ (e) => setAdress(e.target.value) }
+          />
+          <TextInput
+            data-testid="customer_checkout__input-addressNumber"
+            id="user-numero"
+            label="Número"
+            onChange={ (e) => setNumber(e.target.value) }
+            placeholder="Numero"
+            type="number"
+            value={ number }
+          />
+        </div>
+        <Button
+          onClick={ handleClick }
+          testid="customer_checkout__button-submit-order"
+          type="button"
         >
-          { allSellers.map((e) => (
-            <option
-              key={ `seller-${e.id}` }
-              value={ e.id }
-            >
-              { e.name }
-            </option>
-          ))}
-        </select>
-      </label>
-      <TextInput
-        placeholder="Digite o endereço"
-        data-testid="customer_checkout__input-address"
-        type="text"
-        id="user-name"
-        label="Endereço"
-        value={ address }
-        onChange={ (e) => setAdress(e.target.value) }
-      />
-      <TextInput
-        data-testid="customer_checkout__input-addressNumber"
-        id="user-numero"
-        label="Número"
-        onChange={ (e) => setNumber(e.target.value) }
-        placeholder="Numero"
-        type="number"
-        value={ number }
-      />
-      <Button
-        onClick={ handleClick }
-        testid="customer_checkout__button-submit-order"
-        type="button"
-      >
-        Finalizar Pedido
-      </Button>
-
+          Finalizar Pedido
+        </Button>
+      </div>
     </div>
   );
 }

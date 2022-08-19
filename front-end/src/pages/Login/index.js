@@ -22,12 +22,6 @@ function Login() {
     } else setCanLogin(false);
   }, [email, password]);
 
-  useEffect(() => {
-    if (getItem('user').role === 'customer') {
-      navigate('/customer/orders');
-    }
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch('api/login', {
@@ -48,12 +42,7 @@ function Login() {
       const data = await response.json();
       setUser(data);
       if (data.role === 'customer') {
-        if (getItem('user').name !== '') {
-          navigate('/customer/orders');
-        }
-        if (getItem('user').name === '') {
-          navigate('/customer/products');
-        }
+        navigate('/customer/products');
       }
       if (data.role === 'seller') {
         navigate('/seller/orders');
